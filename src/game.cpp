@@ -33,23 +33,17 @@ void Game::move_black() {
 }
 
 bool Game::is_over() const {
-    if (white_player->is_won()) {
-        return true;
-    }
-    if (black_player->is_won()) {
-        return true;
-    }
     return board.is_stagnation();
 }
 
 void Game::print_result() const {
     std::cout << "Game over!" << std::endl;
-    if (board.is_stagnation()) {
-        std::cout << "DRAW" << std::endl;
-    } else if (white_player->is_won()) {
-        std::cout << white_player->name << "is won!" << std::endl;
+    if (white_player->is_won()) {
+        std::cout << white_player->get_name() << "is won!" << std::endl;
+    } else if (black_player->is_won()) {
+        std::cout << black_player->get_name() << "is won!" << std::endl;
     } else {
-        std::cout << black_player->name << "is won!" << std::endl;
+        std::cout << "DRAW" << std::endl;
     }
 }
 
