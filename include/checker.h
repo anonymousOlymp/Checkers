@@ -1,14 +1,12 @@
 #ifndef CHECKER_H
 #define CHECKER_H
 
-#include <utility>
-
-using Position = std::pair<char, char>;
+#include "position.h"
 
 class Checker {
 public:
-    Checker(Position position, char side) noexcept
-        : position_(position), side_(side)
+    explicit Checker(char side) noexcept
+        : side_(side)
     {}
     Checker(const Checker &) = default;
     Checker(Checker &&) noexcept = default;
@@ -23,7 +21,6 @@ public:
     char get_side() const;
 
 private:
-    Position position_;
     char side_;
     bool is_king_ = false;
 };
