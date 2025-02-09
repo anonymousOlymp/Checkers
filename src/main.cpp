@@ -8,8 +8,7 @@ int main(int argc, const char** argv) {
         Game game;
         game.choose_side();
         do {
-            game.move_white();
-            game.move_black();
+            game.move();
         } while (!game.is_over());
         game.print_result();
     } catch(std::exception &exception) {

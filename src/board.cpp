@@ -46,6 +46,10 @@ Board::State Board::get_state() const noexcept { return state_; }
 
 void Board::set_state(State state) noexcept { state_ = state; }
 
+void Board::set_orientation(char orientation) {
+    side_ = orientation;
+}
+
 void Board::process_human_checkers(const Functor &functor) const {
     for (const auto &position_to_checker : board_) {
         if (position_to_checker.second.get_side() == side_) {

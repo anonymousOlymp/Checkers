@@ -26,6 +26,7 @@ public:
     operator std::string() const;
     State get_state() const noexcept;
     void set_state(State state) noexcept;
+    void set_orientation(char orientation);
     void process_human_checkers(const Functor &functor) const;
     void process_computer_checkers(const Functor &functor) const;
     void process_checkers(const Functor &functor) const;

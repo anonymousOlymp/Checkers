@@ -2,6 +2,9 @@
 #define GAME_H
 
 #include <memory>
+#include <queue>
+
+#include "player.h"
 class Game {
 public:
     Game() = default;
@@ -12,15 +15,13 @@ public:
     ~Game() = default;
 
     void choose_side();
-    void move_white();
-    void move_black();
+    void move();
     bool is_over() const;
     void print_result() const;
 
 private:
-    std::shared_ptr<Player> white_player = nullptr;
-    std::shared_ptr<Player> black_player = nullptr;
-    Board board;
+    std::queue<std::shared_ptr<Player>> players_;
+    Board board_;
 };
 
 #endif // GAME_H

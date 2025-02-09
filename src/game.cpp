@@ -1,4 +1,5 @@
 #include <iostream>
+#include "board.h"
 
 #include "game.h"
 
@@ -9,14 +10,14 @@ void Game::choose_side() {
         std::cin >> side;
         if (side == 'W' || side == 'B') {
             if (side == 'W') {
-                white_player = std::make_shared<HumanPlayer>();
-                black_player = std::make_shared<ConsolePlayer>();
+                players_.push(std::make_shared<HumanPlayer>(board_));
+                players_.push(std::make_shared<ComputerPlayer>(board_));
             }
             if (side == 'B') {
-                white_player = std::make_shared<ConsolePlayer>();
-                black_player = std::make_shared<HumanPlayer>();
+                players_.push(std::make_shared<ComputerPlayer>(board_));
+                players_.push(std::make_shared<HumanPlayer>(board_));
             }
-            board.set_orientation(side);
+            board_.set_orientation(side);
             return;
         }
         std::cerr << "Error. " << side << " wasn't recognized."
@@ -24,24 +25,23 @@ void Game::choose_side() {
     }
 }
 
-void Game::move_white() {
-    white_player->move(board)
-}
-
-void Game::move_black() {
-    black_player->move(board);
+void Game::move() {
+    auto player = players_.front();
+    players_.pop();
+    player->move();
+    players_.push(player);
 }
 
 bool Game::is_over() const {
-    return board.is_stagnation();
+    return board_.get_state() != Board::State::PLAYING;
 }
 
 void Game::print_result() const {
     std::cout << "Game over!" << std::endl;
-    if (white_player->is_won()) {
-        std::cout << white_player->get_name() << "is won!" << std::endl;
-    } else if (black_player->is_won()) {
-        std::cout << black_player->get_name() << "is won!" << std::endl;
+    if (board_.get_state() == Board::State::HUMAN_WON) {
+        std::cout << "You are won!" << std::endl;
+    } else if (board_.get_state() == Board::State::COMPUTER_WON) {
+        std::cout << "Computer is won!" << std::endl;
     } else {
         std::cout << "DRAW" << std::endl;
     }
