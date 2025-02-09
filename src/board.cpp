@@ -105,35 +105,45 @@ Moves Board::get_free_moves(Position position) const {
 }
 
 Moves Board::get_eat_moves(Position position) const {
-    std::vector<Position> result;
+    std::vector<Move> result;
     char current_side = get_checker(position).get_side();
     for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,
                            Direction::UP_LEFT, Direction::UP_RIGHT}) {
-        apply_if_exists(position, direction,
-                        [&result, this, position, current_side](Position next) {
-                            if (has_checker(next) &&
-                                get_checker(next).get_side() != current_side) {
-                                result.push_back(next);
+        apply_if_exists(
+            position, direction,
+            [&result, this, position, current_side, direction](Position next) {
+                if (has_checker(next) &&
+                    get_checker(next).get_side() != current_side) {
+                    apply_if_exists(
+                        position, direction,
+                        [&result, this, position, current_side,
+                         next](Position continuation) {
+                            if (!has_checker(next)) {
+                                result.push_back(Move(position, next));
                             }
                         });
+                }
+            });
     }
     return result;
 }
 
-Moves Board::get_king_eat_moves(
-    Position position) const {
+Moves Board::get_king_eat_moves(Position position) const {
     std::vector<Position> result = get_neighbors_positions(position);
     char current_side = get_checker(position).get_side();
-    std::vector<Position> buffer;
+    Moves buffer;
     for (Position next : result) {
         Direction direction = Move(position, next);
         bool terminate = false;
         while (apply_if_exists(
                    next, direction,
-                   [&buffer, this, current_side, &terminate](Position p) {
+                   [&buffer, this, current_side, &terminate, direction,
+                    position](Position p) {
                        if (has_checker(p) &&
-                           get_checker(p).get_side() != current_side) {
-                           buffer.push_back(p);
+                           get_checker(p).get_side() != current_side &&
+                           apply_if_exists(p, direction, [](Position) {}) &&
+                           !has_checker(p + direction)) {
+                           buffer.push_back(Move(position, p));
                            terminate = true;
                        }
                    }) &&
@@ -146,10 +156,9 @@ std::vector<Position> Board::get_neighbors_positions(Position position) {
     std::vector<Position> result;
     for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,
                            Direction::UP_LEFT, Direction::UP_RIGHT}) {
-        apply_if_exists(position, direction,
-                        [&result, position](Position next) {
-                            result.push_back(next);
-                        });
+        apply_if_exists(
+            position, direction,
+            [&result, position](Position next) { result.push_back(next); });
     }
     return result;
 }
