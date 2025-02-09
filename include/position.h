@@ -9,8 +9,8 @@ enum class Direction { UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT };
 
 struct Position {
 public:
-    const char column;
-    const char row;
+    char column;
+    char row;
 
     Position(char column, char row) noexcept
         : column(column), row(row)
@@ -25,8 +25,8 @@ public:
 
 struct Move {
 public:
-    const Position first;
-    const Position second;
+    Position first;
+    Position second;
 
     Move(Position first, Position second) noexcept
         : first(first), second(second)
@@ -49,6 +49,17 @@ struct std::hash<Position>
     {
         std::size_t h1 = std::hash<char>{}(position.column);
         std::size_t h2 = std::hash<char>{}(position.row);
+        return h1 ^ (h2 << 1);
+    }
+};
+
+template<>
+struct std::hash<Move>
+{
+    std::size_t operator()(const Move &move) const noexcept
+    {
+        std::size_t h1 = std::hash<Position>{}(move.first);
+        std::size_t h2 = std::hash<Position>{}(move.second);
         return h1 ^ (h2 << 1);
     }
 };

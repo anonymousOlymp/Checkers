@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <random>
 #include <string>
 #include <unordered_set>
 
@@ -21,8 +22,8 @@ protected:
 class HumanPlayer : public Player {
 public:
     explicit HumanPlayer(Board &board) noexcept : Player(board) {}
-    HumanPlayer(const HumanPlayer &) = default;
-    HumanPlayer(HumanPlayer &&) noexcept = default;
+    HumanPlayer(const HumanPlayer &) = delete;
+    HumanPlayer(HumanPlayer &&) noexcept = delete;
     HumanPlayer &operator=(const HumanPlayer &) = delete;
     HumanPlayer &operator=(HumanPlayer &&) noexcept = delete;
     ~HumanPlayer() noexcept override = default;
@@ -35,18 +36,22 @@ private:
     bool try_move(Position position, Position goal, Direction direction, bool need_eat, bool is_king, Positions eaten) const;
 };
 
-class ConsolePlayer : public Player {
+class ComputerPlayer : public Player {
 public:
-    ConsolePlayer() noexcept = default;
-    ConsolePlayer(const ConsolePlayer &) = default;
-    ConsolePlayer(ConsolePlayer &&) noexcept = default;
-    ConsolePlayer &operator=(const ConsolePlayer &) = default;
-    ConsolePlayer &operator=(ConsolePlayer &&) noexcept = default;
-    ~ConsolePlayer() noexcept override = default;
+    explicit ComputerPlayer(Board &board) noexcept :
+        Player(board), mt_(device_()) {}
+    ComputerPlayer(const ComputerPlayer &) = delete;
+    ComputerPlayer(ComputerPlayer &&) noexcept = delete;
+    ComputerPlayer &operator=(const ComputerPlayer &) = delete;
+    ComputerPlayer &operator=(ComputerPlayer &&) noexcept = delete;
+    ~ComputerPlayer() noexcept override = default;
 
-    void move(Board &board) override;
+    void move() override;
+
 private:
-    
+    using Moves = std::vector<Move>;
+    std::random_device device_;
+    std::mt19937 mt_;
 };
 
 #endif // PLAYER_H

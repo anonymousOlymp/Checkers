@@ -4,6 +4,7 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "checker.h"
 #include "position.h"
@@ -32,9 +33,9 @@ public:
     void remove_checker(Position position);
     void add_checker(Position position, Checker checker);
     const Checker &get_checker(Position position) const;
-    std::vector<Move> get_free_move(Position position) const;
-    std::vector<Position> get_enemy_neighbors(Position position) const;
-    std::vector<Position> get_enemy_neighbors_of_king(Position position) const;
+    std::vector<Move> get_free_moves(Position position) const;
+    std::vector<Move> get_eat_moves(Position position) const;
+    std::vector<Move> get_king_eat_moves(Position position) const;
 
 private:
     State state_ = State::PLAYING;
