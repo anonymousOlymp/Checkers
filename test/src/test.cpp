@@ -125,5 +125,10 @@ int main(int argc, const char** argv) {
     Exists_VariousDirection_ReturnsExpected("C8", Direction::UP_LEFT, false);
     Exists_VariousDirection_ReturnsExpected("C8", Direction::DOWN_RIGHT, true);
     Exists_VariousDirection_ReturnsExpected("C8", Direction::DOWN_LEFT, true);
+
+    CheckerToChar_VariousChecker_ReturnsExpected('W', false, 'W');
+    CheckerToChar_VariousChecker_ReturnsExpected('B', false, 'B');
+    CheckerToChar_VariousChecker_ReturnsExpected('W', true, 'X');
+    CheckerToChar_VariousChecker_ReturnsExpected('B', true, 'Y');
     return 0;
 }

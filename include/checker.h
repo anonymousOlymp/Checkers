@@ -5,9 +5,7 @@
 
 class Checker {
 public:
-    explicit Checker(char side) noexcept
-        : side_(side)
-    {}
+    explicit Checker(char side) noexcept : side_(side) {}
     Checker(const Checker &) = default;
     Checker(Checker &&) noexcept = default;
     Checker &operator=(const Checker &) = default;
@@ -24,4 +22,4 @@ private:
     bool is_king_ = false;
 };
 
-#endif // CHECKER_H
+#endif  // CHECKER_H
