@@ -156,6 +156,34 @@ char Board::get_side() const {
     return side_;
 }
 
+bool Board::has_human_king() const {
+    return has_human_king_;
+}
+
+void Board::set_has_human_king(bool has_human_king) {
+    has_human_king_ = has_human_king;
+}
+
+bool Board::has_computer_king() const {
+    return has_computer_king_;
+}
+
+void Board::set_has_computer_king(bool has_computer_king) {
+    has_computer_king_ = has_computer_king;
+}
+
+int Board::get_stagnation_counter() const {
+    return stagnation_counter_;
+}
+
+void Board::increment_stagnation_counter() {
+    ++stagnation_counter_;
+}
+
+void Board::reset_stagnation_counter() {
+    stagnation_counter_ = 0;
+}
+
 std::vector<Position> Board::get_neighbors_positions(Position position) {
     std::vector<Position> result;
     for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,

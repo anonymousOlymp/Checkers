@@ -17,6 +17,9 @@ void HumanPlayer::move() {
         [&checkers_able_to_move, &checkers_necessary_to_move, this,
          &has_checkers](Position position, const Checker &checker) {
             has_checkers = true;
+            if (checker.is_king()) {
+                board_.set_has_human_king(true);
+            }
             if (checker.is_king() &&
                     !board_.get_king_eat_moves(position).empty() ||
                 !checker.is_king() && !board_.get_eat_moves(position).empty()) {
@@ -30,6 +33,11 @@ void HumanPlayer::move() {
         });
     if (!has_checkers) {
         board_.set_state(Board::State::COMPUTER_WON);
+        return;
+    }
+    if (board_.has_human_king() && board_.has_computer_king() &&
+        board_.get_stagnation_counter() == 15) {
+        board_.set_state(Board::State::DRAW);
         return;
     }
     if (checkers_necessary_to_move.empty() && checkers_able_to_move.empty()) {
@@ -53,9 +61,14 @@ void HumanPlayer::move() {
         } else {
             move_is_correct = true;
             Checker moved = board_.get_checker(current);
+            if (board_.has_human_king() && board_.has_computer_king()) {
+                board_.increment_stagnation_counter();
+            }
             if (next.row == 'H' && board_.get_side() == 'W' ||
                 next.row == 'A' && board_.get_side() == 'B') {
+                board_.set_has_human_king(true);
                 moved.set_king();
+                board_.reset_stagnation_counter();
             }
             board_.add_checker(next, moved);
             board_.remove_checker(current);
@@ -78,6 +91,10 @@ bool HumanPlayer::is_move_correct(const Move &move,
                            Direction::UP_LEFT, Direction::UP_RIGHT}) {
         if (try_move(move.first, move.second, direction,
                      necessary_to_move.empty(), is_king, eaten_checkers)) {
+            if (!eaten_checkers.empty()) {
+                board_.reset_stagnation_counter();
+                board_.set_has_computer_king(false);
+            }
             for (Position position : eaten_checkers) {
                 board_.remove_checker(position);
             }
@@ -144,6 +161,7 @@ void ComputerPlayer::move() {
         has_checkers = true;
         Moves neighbors_can_eat;
         if (checker.is_king()) {
+            board_.set_has_computer_king(true);
             neighbors_can_eat = board_.get_king_eat_moves(position);
         } else {
             neighbors_can_eat = board_.get_eat_moves(position);
@@ -160,6 +178,11 @@ void ComputerPlayer::move() {
         board_.set_state(Board::State::HUMAN_WON);
         return;
     }
+    if (board_.has_human_king() && board_.has_computer_king() &&
+        board_.get_stagnation_counter() == 15) {
+        board_.set_state(Board::State::DRAW);
+        return;
+    }
     if (necessary_to_move.empty() && able_to_move.empty()) {
         std::cout << "Computer can't move!" << std::endl;
         board_.set_state(Board::State::DRAW);
@@ -172,13 +195,22 @@ void ComputerPlayer::move() {
     Direction direction = chosen_move;
     std::unordered_set<Position> eaten;
     eat_all(chosen_move, direction, eaten);
+    if (!eaten.empty()) {
+        board_.reset_stagnation_counter();
+        board_.set_has_computer_king(false);
+    }
     for (Position position : eaten) {
         board_.remove_checker(position);
     }
     Position next = chosen_move.second;
     Checker moved = board_.get_checker(chosen_move.first);
+    if (board_.has_computer_king() && board_.has_human_king()) {
+        board_.increment_stagnation_counter();
+    }
     if (next.row == 'H' && board_.get_side() == 'B' ||
         next.row == 'A' && board_.get_side() == 'W') {
+        board_.set_has_computer_king(true);
+        board_.reset_stagnation_counter();
         moved.set_king();
     }
     board_.add_checker(next, moved);

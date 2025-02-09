@@ -39,11 +39,21 @@ public:
     Moves get_eat_moves(Position position) const;
     Moves get_king_eat_moves(Position position) const;
     char get_side() const;
+    bool has_human_king() const;
+    void set_has_human_king(bool has_human_king);
+    bool has_computer_king() const;
+    void set_has_computer_king(bool has_computer_king);
+    int get_stagnation_counter() const;
+    void increment_stagnation_counter();
+    void reset_stagnation_counter();
 
 private:
     State state_ = State::PLAYING;
     std::unordered_map<Position, Checker> board_;
     char side_ = '\0';
+    bool has_human_king_ = false;
+    bool has_computer_king_ = false;
+    int stagnation_counter_ = 0;
 
     static std::vector<Position> get_neighbors_positions(Position position);
     char position_to_char(Position position) const;
