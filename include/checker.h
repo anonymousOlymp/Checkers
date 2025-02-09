@@ -14,8 +14,7 @@ public:
     Checker &operator=(Checker &&) noexcept = default;
     ~Checker() noexcept = default;
 
-    const Position &get_position() const;
-    void set_position(Position position);
+    operator char() const;
     bool is_king() const;
     void set_king();
     char get_side() const;

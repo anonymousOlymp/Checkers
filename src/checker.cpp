@@ -1,21 +1,17 @@
 #include "checker.h"
 
-const Position &Checker::get_position() const {
-    return position_;
-}
+bool Checker::is_king() const { return is_king_; }
 
-void Checker::set_position(Position position) {
-    position_ = position;
-}
+void Checker::set_king() { is_king_ = true; }
 
-bool Checker::is_king() const {
-    return is_king_;
-}
+char Checker::get_side() const { return side_; }
 
-void Checker::set_king() {
-    is_king_ = true;
-}
-
-char Checker::get_side() const {
+Checker::operator char() const {
+    if (is_king()) {
+        if (side_ == 'W') {
+            return 'X';
+        }
+        return 'Y';
+    }
     return side_;
 }
