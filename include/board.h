@@ -11,7 +11,7 @@
 class Board {
 public:
     enum class State { DRAW, PLAYING, HUMAN_WON, COMPUTER_WON };
-    using Functor = std::function<void(const Checker &)>;
+    using Functor = std::function<void(Position, const Checker &)>;
 
     Board();
     Board(const Board &) = default;

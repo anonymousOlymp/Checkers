@@ -2,52 +2,52 @@
 
 #include <iostream>
 
-const std::string HumanPlayer::get_name() const noexcept {
-    return "You";
-}
-
-bool HumanPlayer::is_won() const {
-    
-}
+#include "checker.h"
+#include "position.h"
 
 void HumanPlayer::move(Board &board) {
-    if (board.is_human_stagnation()) {
-        return;
-    }
     std::cout << static_cast<std::string>(board) << std::endl;
+    std::vector<Position> checkers_necessary_to_move;
+    std::vector<Position> checkers_able_to_move;
+    board.process_human_checkers(
+        [&checkers_able_to_move, &checkers_necessary_to_move, &board](
+            Position position, const Checker &checker) {
+            if (checker.is_king() &&
+                    !board.get_enemy_neighbors_of_king(position).empty() ||
+                !checker.is_king() &&
+                    !board.get_enemy_neighbors(position).empty()) {
+                checkers_necessary_to_move.push_back(position);
+            }
+            if (checkers_necessary_to_move.empty()) {
+                if (!board.get_free_move(position).empty()) {
+                    checkers_able_to_move.push_back(position);
+                }
+            }
+        });
     bool move_is_correct = false;
     while (!move_is_correct) {
         std::string current_position;
         std::string next_position;
         std::cout << "Your move: " << std::flush;
         std::cin >> current_position >> next_position;
-        if (current_position.size() != 2
-            || next_position.size() != 2
-            || !(board.try_move_human(
-                current_position[0],
-                current_position[1],
-                next_position[0],
-                next_position[1]))) {
-            std::cerr << "Error. Wrong move: " << current_position
-                << " " << next_position
-                << " Try again!" << std::endl;
+        if (!is_move_correct(current_position, next_position, checkers_necessary_to_move, checkers_able_to_move)) {
+            std::cerr << "Error. Wrong move: " << current_position << " "
+                      << next_position << " Try again!" << std::endl;
         } else {
             move_is_correct = true;
         }
     }
 }
 
-const std::string ConsolePlayer::get_name() const noexcept {
-    return "Computer";
-}
-
-bool ConsolePlayer::is_won() const {
-    
-}
-
 void ConsolePlayer::move(Board &board) {
     if (board.is_computer_stagnation()) {
         return;
     }
-    
+}
+
+bool HumanPlayer::is_move_correct(const std::string &current_position, const std::string &next_position) {
+    if (current_position.size() != 2 || next_position.size() != 2) {
+        return false;
+    }
+    return true;
 }

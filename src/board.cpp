@@ -49,7 +49,7 @@ void Board::set_state(State state) noexcept { state_ = state; }
 void Board::process_human_checkers(const Functor &functor) const {
     for (const auto &position_to_checker : board_) {
         if (position_to_checker.second.get_side() == side_) {
-            functor(position_to_checker.second);
+            functor(position_to_checker.first, position_to_checker.second);
         }
     }
 }
@@ -57,14 +57,14 @@ void Board::process_human_checkers(const Functor &functor) const {
 void Board::process_computer_checkers(const Functor &functor) const {
     for (const auto &position_to_checker : board_) {
         if (position_to_checker.second.get_side() != side_) {
-            functor(position_to_checker.second);
+            functor(position_to_checker.first, position_to_checker.second);
         }
     }
 }
 
 void Board::process_checkers(const Functor &functor) const {
     for (const auto &position_to_checker : board_) {
-        functor(position_to_checker.second);
+        functor(position_to_checker.first, position_to_checker.second);
     }
 }
 

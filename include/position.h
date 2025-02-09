@@ -15,13 +15,12 @@ public:
     Position(char column, char row) noexcept
         : column(column), row(row)
     {};
-    
-    explicit Position(std::string position) noexcept
-        : column(position[0]), row(position[1])
-    {};
+
+    static Position from_string(const std::string &position) noexcept;
 
     bool operator==(const Position &other) const;
     bool operator!=(const Position &other) const;
+    operator bool() const;
 };
 
 struct Move {

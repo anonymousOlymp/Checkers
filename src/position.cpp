@@ -2,6 +2,13 @@
 
 #include <stdexcept>
 
+Position Position::from_string(const std::string &position) noexcept {
+    if (position.size() != 2) {
+        return Position('\0', '\0');
+    }
+    return Position(position[0], position[1]);
+}
+
 bool Position::operator==(const Position &other) const {
     return column == other.column
         && row == other.row;
@@ -9,6 +16,10 @@ bool Position::operator==(const Position &other) const {
 
 bool Position::operator!=(const Position &other) const {
     return !(*this == other);
+}
+
+Position::operator bool() const {
+    return row <= 'H' && row >= 'A' && column >= '1' && column <= '8';
 }
 
 Move::operator Direction() const {

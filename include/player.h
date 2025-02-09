@@ -3,12 +3,12 @@
 
 #include <string>
 
+#include "board.h"
+
 class Player {
 public:
     virtual ~Player() noexcept = default;
 
-    virtual const std::string get_name() const noexcept = 0;
-    virtual bool is_won() const = 0;
     virtual void move(Board &board) = 0;
 };
 
@@ -19,13 +19,11 @@ public:
     HumanPlayer(HumanPlayer &&) noexcept = default;
     HumanPlayer &operator=(const HumanPlayer &) = default;
     HumanPlayer &operator=(HumanPlayer &&) noexcept = default;
-    virtual ~HumanPlayer() noexcept = default;
+    ~HumanPlayer() noexcept override = default;
 
-    virtual const std::string get_name() const noexcept override;
-    virtual bool is_won() const override;
-    virtual void move(Board &board) override;
+    void move(Board &board) override;
 private:
-    
+    bool is_move_correct(const std::string &current_position, const std::string &next_position, const std::vector<Position> &checkers_necessary_to_move, const std::vector<Position> &checkers_able_to_move);
 };
 
 class ConsolePlayer : public Player {
@@ -35,11 +33,9 @@ public:
     ConsolePlayer(ConsolePlayer &&) noexcept = default;
     ConsolePlayer &operator=(const ConsolePlayer &) = default;
     ConsolePlayer &operator=(ConsolePlayer &&) noexcept = default;
-    virtual ~ConsolePlayer() noexcept = default;
+    ~ConsolePlayer() noexcept override = default;
 
-    virtual const std::string get_name() const noexcept override;
-    virtual bool is_won() const override;
-    virtual void move(Board &board) override;
+    void move(Board &board) override;
 private:
     
 };
