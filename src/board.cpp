@@ -90,7 +90,7 @@ const Checker &Board::get_checker(Position position) const {
     return board_.find(position)->second;
 }
 
-std::vector<Move> Board::get_free_moves(Position position) const {
+Moves Board::get_free_moves(Position position) const {
     std::vector<Move> result;
     for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,
                            Direction::UP_LEFT, Direction::UP_RIGHT}) {
@@ -104,7 +104,7 @@ std::vector<Move> Board::get_free_moves(Position position) const {
     return result;
 }
 
-std::vector<Position> Board::get_eat_moves(Position position) const {
+Moves Board::get_eat_moves(Position position) const {
     std::vector<Position> result;
     char current_side = get_checker(position).get_side();
     for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,
@@ -120,7 +120,7 @@ std::vector<Position> Board::get_eat_moves(Position position) const {
     return result;
 }
 
-std::vector<Position> Board::get_king_eat_moves(
+Moves Board::get_king_eat_moves(
     Position position) const {
     std::vector<Position> result = get_neighbors_positions(position);
     char current_side = get_checker(position).get_side();

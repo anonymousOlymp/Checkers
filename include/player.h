@@ -19,6 +19,8 @@ protected:
     Board &board_;
 };
 
+using Positions = std::unordered_set<Position>;
+
 class HumanPlayer : public Player {
 public:
     explicit HumanPlayer(Board &board) noexcept : Player(board) {}
@@ -29,17 +31,18 @@ public:
     ~HumanPlayer() noexcept override = default;
 
     void move() override;
-private:
-    using Positions = std::unordered_set<Position>;
 
-    bool is_move_correct(const Move &move, const Positions &necessary_to_move, const Positions &able_to_move);
-    bool try_move(Position position, Position goal, Direction direction, bool need_eat, bool is_king, Positions eaten) const;
+private:
+    bool is_move_correct(const Move &move, const Positions &necessary_to_move,
+                         const Positions &able_to_move);
+    bool try_move(Position position, Position goal, Direction direction,
+                  bool need_eat, bool is_king, Positions eaten) const;
 };
 
 class ComputerPlayer : public Player {
 public:
-    explicit ComputerPlayer(Board &board) noexcept :
-        Player(board), mt_(device_()) {}
+    explicit ComputerPlayer(Board &board) noexcept
+        : Player(board), mt_(device_()) {}
     ComputerPlayer(const ComputerPlayer &) = delete;
     ComputerPlayer(ComputerPlayer &&) noexcept = delete;
     ComputerPlayer &operator=(const ComputerPlayer &) = delete;
@@ -49,9 +52,10 @@ public:
     void move() override;
 
 private:
-    using Moves = std::vector<Move>;
+
+    void eat_all(Move &chosen, Direction &direction, Positions &eaten);
     std::random_device device_;
     std::mt19937 mt_;
 };
 
-#endif // PLAYER_H
+#endif  // PLAYER_H

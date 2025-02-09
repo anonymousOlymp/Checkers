@@ -14,13 +14,12 @@ void HumanPlayer::move() {
     Positions checkers_able_to_move;
     bool has_checkers = false;
     board_.process_human_checkers(
-        [&checkers_able_to_move, &checkers_necessary_to_move, this, &has_checkers](
-            Position position, const Checker &checker) {
+        [&checkers_able_to_move, &checkers_necessary_to_move, this,
+         &has_checkers](Position position, const Checker &checker) {
             has_checkers = true;
             if (checker.is_king() &&
                     !board_.get_king_eat_moves(position).empty() ||
-                !checker.is_king() &&
-                    !board_.get_eat_moves(position).empty()) {
+                !checker.is_king() && !board_.get_eat_moves(position).empty()) {
                 checkers_necessary_to_move.insert(position);
             }
             if (checkers_necessary_to_move.empty()) {
@@ -131,38 +130,64 @@ bool HumanPlayer::try_move(Position position, Position goal,
 }
 
 void ComputerPlayer::move() {
-    Moves checkers_necessary_to_move;
-    Moves checkers_able_to_move;
+    Moves necessary_to_move;
+    Moves able_to_move;
     bool has_checkers = false;
-    board_.process_human_checkers(
-        [&checkers_able_to_move, &checkers_necessary_to_move, this, &has_checkers](
-            Position position, const Checker &checker) {
-            has_checkers = true;
-            Moves neighbors_can_eat;
-            if (checker.is_king()) {
-                neighbors_can_eat = board_.get_king_eat_moves(position);
-            } else {
-                neighbors_can_eat = board_.get_eat_moves(position);
-            }
-            checkers_necessary_to_move.insert(checkers_necessary_to_move.end(), neighbors_can_eat.begin(), neighbors_can_eat.end());
-            if (checkers_necessary_to_move.empty()) {
-                Moves free = board_.get_free_moves(position);
-                checkers_able_to_move.insert(checkers_able_to_move.end(), free.begin(), free.end());
-            }
-        });
+    board_.process_computer_checkers([&able_to_move, &necessary_to_move, this,
+                                      &has_checkers](Position position,
+                                                     const Checker &checker) {
+        has_checkers = true;
+        Moves neighbors_can_eat;
+        if (checker.is_king()) {
+            neighbors_can_eat = board_.get_king_eat_moves(position);
+        } else {
+            neighbors_can_eat = board_.get_eat_moves(position);
+        }
+        necessary_to_move.insert(necessary_to_move.end(),
+                                 neighbors_can_eat.begin(),
+                                 neighbors_can_eat.end());
+        if (necessary_to_move.empty()) {
+            Moves free = board_.get_free_moves(position);
+            able_to_move.insert(able_to_move.end(), free.begin(), free.end());
+        }
+    });
     if (!has_checkers) {
         board_.set_state(Board::State::HUMAN_WON);
         return;
     }
-    if (checkers_necessary_to_move.empty() && checkers_able_to_move.empty()) {
+    if (necessary_to_move.empty() && able_to_move.empty()) {
         std::cout << "Computer can't move!" << std::endl;
         board_.set_state(Board::State::DRAW);
         return;
     }
-    Moves moves = (checkers_necessary_to_move.empty()) ? checkers_able_to_move : checkers_necessary_to_move;
+    Moves moves =
+        (necessary_to_move.empty()) ? able_to_move : necessary_to_move;
     std::uniform_int_distribution<> distribution(0, moves.size() - 1);
     Move chosen_move = moves[distribution(mt_)];
-    
-    board_.add_checker(chosen_move.second, board_.get_checker(chosen_move.first));
+    Direction direction = chosen_move;
+    std::unordered_set<Position> eaten;
+    eat_all(chosen_move, direction, eaten);
+    for (Position position : eaten) {
+        board_.remove_checker(position);
+    }
+    board_.add_checker(chosen_move.second,
+                       board_.get_checker(chosen_move.first));
     board_.remove_checker(chosen_move.first);
+}
+
+void ComputerPlayer::eat_all(Move &chosen, Direction &direction,
+                             Positions &eaten) {
+    while (board_.has_checker(chosen.second)) {
+        Position next = chosen.second + direction;
+        eaten.insert(chosen.second);
+        chosen = Move(chosen.first, next);
+        Moves eat_positions = board_.get_eat_moves(next);
+        for (Move eat_move : eat_positions) {
+            if (!eaten.contains(eat_move.second)) {
+                chosen = Move(chosen.first, eat_move.second);
+                direction = eat_move;
+                break;
+            }
+        }
+    }
 }

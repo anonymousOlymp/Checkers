@@ -9,6 +9,8 @@
 #include "checker.h"
 #include "position.h"
 
+using Moves = std::vector<Move>;
+
 class Board {
 public:
     enum class State { DRAW, PLAYING, HUMAN_WON, COMPUTER_WON };
@@ -33,9 +35,9 @@ public:
     void remove_checker(Position position);
     void add_checker(Position position, Checker checker);
     const Checker &get_checker(Position position) const;
-    std::vector<Move> get_free_moves(Position position) const;
-    std::vector<Move> get_eat_moves(Position position) const;
-    std::vector<Move> get_king_eat_moves(Position position) const;
+    Moves get_free_moves(Position position) const;
+    Moves get_eat_moves(Position position) const;
+    Moves get_king_eat_moves(Position position) const;
 
 private:
     State state_ = State::PLAYING;
