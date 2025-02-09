@@ -3,16 +3,19 @@
 #include <iostream>
 #include <unordered_set>
 
+#include "board.h"
 #include "checker.h"
 #include "position.h"
 
 void HumanPlayer::move() {
     std::cout << static_cast<std::string>(board_) << std::endl;
-    std::unordered_set<Position> checkers_necessary_to_move;
-    std::unordered_set<Position> checkers_able_to_move;
+    Positions checkers_necessary_to_move;
+    Positions checkers_able_to_move;
+    bool has_checkers = false;
     board_.process_human_checkers(
-        [&checkers_able_to_move, &checkers_necessary_to_move, this](
+        [&checkers_able_to_move, &checkers_necessary_to_move, this, &has_checkers](
             Position position, const Checker &checker) {
+            has_checkers = true;
             if (checker.is_king() &&
                     !board_.get_enemy_neighbors_of_king(position).empty() ||
                 !checker.is_king() &&
@@ -25,6 +28,15 @@ void HumanPlayer::move() {
                 }
             }
         });
+    if (!has_checkers) {
+        board_.set_state(Board::State::COMPUTER_WON);
+        return;
+    }
+    if (checkers_necessary_to_move.empty() && checkers_able_to_move.empty()) {
+        std::cout << "You can't move!" << std::endl;
+        board_.set_state(Board::State::DRAW);
+        return;
+    }
     bool move_is_correct = false;
     while (!move_is_correct) {
         std::string current_position;
