@@ -5,7 +5,7 @@
 
 int main(int argc, const char** argv) {
     try {
-        Game game;
+        Game game(std::cout, std::cerr, std::cin);
         game.choose_side();
         do {
             game.move();

@@ -9,7 +9,7 @@
 #include "position.h"
 
 void HumanPlayer::move() {
-    std::cout << static_cast<std::string>(board_) << std::endl;
+    out_ << static_cast<std::string>(board_) << std::endl;
     Positions checkers_necessary_to_move;
     Positions checkers_able_to_move;
     bool has_checkers = false;
@@ -41,7 +41,7 @@ void HumanPlayer::move() {
         return;
     }
     if (checkers_necessary_to_move.empty() && checkers_able_to_move.empty()) {
-        std::cout << "You can't move!" << std::endl;
+        out_ << "You can't move!" << std::endl;
         board_.set_state(Board::State::DRAW);
         return;
     }
@@ -49,15 +49,15 @@ void HumanPlayer::move() {
     while (!move_is_correct) {
         std::string current_position;
         std::string next_position;
-        std::cout << "Your move: " << std::flush;
-        std::cin >> current_position >> next_position;
+        out_ << "Your move: " << std::flush;
+        in_ >> current_position >> next_position;
         Position current = Position::from_string(current_position);
         Position next = Position::from_string(next_position);
         bool was_king_produced = false;
         if (!current || !next ||
             !is_move_correct(Move(current, next), checkers_necessary_to_move,
                              checkers_able_to_move, was_king_produced)) {
-            std::cerr << "Error. Wrong move: " << current_position << " "
+            err_ << "Error. Wrong move: " << current_position << " "
                       << next_position << " Try again!" << std::endl;
         } else {
             move_is_correct = true;
@@ -199,7 +199,7 @@ void ComputerPlayer::move() {
         return;
     }
     if (necessary_to_move.empty() && able_to_move.empty()) {
-        std::cout << "Computer can't move!" << std::endl;
+        out_ << "Computer can't move!" << std::endl;
         board_.set_state(Board::State::DRAW);
         return;
     }
