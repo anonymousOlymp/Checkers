@@ -86,6 +86,38 @@ bool apply_if_exists(Position position, Direction direction, Operation o) {
     return true;
 }
 
+bool exists(Position position, Direction direction) {
+    switch (direction) {
+        case Direction::UP_LEFT:
+            if (position.column == '1' || position.row == 'H') {
+                return false;
+            }
+            break;
+        
+        case Direction::UP_RIGHT:
+            if (position.column == '8' || position.row == 'H') {
+                return false;
+            }
+            break;
+
+        case Direction::DOWN_LEFT:
+            if (position.column == '1' || position.row == 'A') {
+                return false;
+            }
+            break;
+        
+        case Direction::DOWN_RIGHT:
+            if (position.column == '8' || position.row == 'A') {
+                return false;
+            }
+            break;
+        
+        default:
+            throw std::logic_error("Error. Unexpected direction!");
+    }
+    return true;
+}
+
 
 Position operator-(Position position, Direction direction) {
     switch (direction) {

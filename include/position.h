@@ -39,6 +39,7 @@ using Operation = std::function<void (Position)>;
 
 Position operator+(Position position, Direction direction);
 bool apply_if_exists(Position position, Direction direction, Operation o);
+bool exists(Position position, Direction direction);
 Position operator-(Position position, Direction direction);
 Direction operator-(Position first, Position second);
 

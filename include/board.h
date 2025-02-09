@@ -46,6 +46,7 @@ public:
     int get_stagnation_counter() const;
     void increment_stagnation_counter();
     void reset_stagnation_counter();
+    bool is_changed_to_king(Position position, bool is_human) const;
 
 private:
     State state_ = State::PLAYING;

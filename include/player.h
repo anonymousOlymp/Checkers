@@ -34,9 +34,9 @@ public:
 
 private:
     bool is_move_correct(const Move &move, const Positions &necessary_to_move,
-                         const Positions &able_to_move);
+                         const Positions &able_to_move, bool &was_king_produced);
     bool try_move(Position position, Position goal, Direction direction,
-                  bool need_eat, bool is_king, Positions eaten) const;
+                  bool need_eat, bool &is_king, Positions eaten) const;
 };
 
 class ComputerPlayer : public Player {
@@ -52,7 +52,8 @@ public:
     void move() override;
 
 private:
-    void eat_all(Move &chosen, Direction &direction, Positions &eaten);
+    void eat_all(Move &chosen, Direction &direction,
+                 Positions &eaten, bool &is_king);
     std::random_device device_;
     std::mt19937 mt_;
 };
