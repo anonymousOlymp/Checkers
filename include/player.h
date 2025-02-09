@@ -2,28 +2,37 @@
 #define PLAYER_H
 
 #include <string>
+#include <unordered_set>
 
 #include "board.h"
+#include "position.h"
 
 class Player {
 public:
+    Player(Board &board) noexcept : board_(board) {}
     virtual ~Player() noexcept = default;
 
-    virtual void move(Board &board) = 0;
+    virtual void move() = 0;
+
+protected:
+    Board &board_;
 };
 
 class HumanPlayer : public Player {
 public:
-    HumanPlayer() noexcept = default;
+    explicit HumanPlayer(Board &board) noexcept : Player(board) {}
     HumanPlayer(const HumanPlayer &) = default;
     HumanPlayer(HumanPlayer &&) noexcept = default;
-    HumanPlayer &operator=(const HumanPlayer &) = default;
-    HumanPlayer &operator=(HumanPlayer &&) noexcept = default;
+    HumanPlayer &operator=(const HumanPlayer &) = delete;
+    HumanPlayer &operator=(HumanPlayer &&) noexcept = delete;
     ~HumanPlayer() noexcept override = default;
 
-    void move(Board &board) override;
+    void move() override;
 private:
-    bool is_move_correct(const std::string &current_position, const std::string &next_position, const std::vector<Position> &checkers_necessary_to_move, const std::vector<Position> &checkers_able_to_move);
+    using Positions = std::unordered_set<Position>;
+
+    bool is_move_correct(const Move &move, const Positions &necessary_to_move, const Positions &able_to_move);
+    bool try_move(Position position, Position goal, Direction direction, bool need_eat, bool is_king, Positions eaten) const;
 };
 
 class ConsolePlayer : public Player {
