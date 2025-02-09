@@ -52,7 +52,12 @@ void HumanPlayer::move() {
                       << next_position << " Try again!" << std::endl;
         } else {
             move_is_correct = true;
-            board_.add_checker(next, board_.get_checker(current));
+            Checker moved = board_.get_checker(current);
+            if (next.row == 'H' && board_.get_side() == 'W' ||
+                next.row == 'A' && board_.get_side() == 'B') {
+                moved.set_king();
+            }
+            board_.add_checker(next, moved);
             board_.remove_checker(current);
         }
     }
@@ -170,8 +175,13 @@ void ComputerPlayer::move() {
     for (Position position : eaten) {
         board_.remove_checker(position);
     }
-    board_.add_checker(chosen_move.second,
-                       board_.get_checker(chosen_move.first));
+    Position next = chosen_move.second;
+    Checker moved = board_.get_checker(chosen_move.first);
+    if (next.row == 'H' && board_.get_side() == 'B' ||
+        next.row == 'A' && board_.get_side() == 'W') {
+        moved.set_king();
+    }
+    board_.add_checker(next, moved);
     board_.remove_checker(chosen_move.first);
 }
 

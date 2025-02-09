@@ -38,6 +38,7 @@ public:
     Moves get_free_moves(Position position) const;
     Moves get_eat_moves(Position position) const;
     Moves get_king_eat_moves(Position position) const;
+    char get_side() const;
 
 private:
     State state_ = State::PLAYING;

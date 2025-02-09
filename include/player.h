@@ -52,7 +52,6 @@ public:
     void move() override;
 
 private:
-
     void eat_all(Move &chosen, Direction &direction, Positions &eaten);
     std::random_device device_;
     std::mt19937 mt_;

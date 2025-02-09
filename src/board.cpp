@@ -152,6 +152,10 @@ Moves Board::get_king_eat_moves(Position position) const {
     return buffer;
 }
 
+char Board::get_side() const {
+    return side_;
+}
+
 std::vector<Position> Board::get_neighbors_positions(Position position) {
     std::vector<Position> result;
     for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,
