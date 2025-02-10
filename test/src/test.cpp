@@ -256,5 +256,12 @@ int main(int argc, const char** argv) {
     HumanPlayerMove_BackMove_MoveConditions();
     HumanPlayerMove_MoveBecameKing_MoveConditions();
     HumanPlayerMove_EatBecameKingSimple_MoveConditions();
+    HumanPlayerMove_DoubleMoveKing_MoveConditions();
+    HumanPlayerMove_MoveBecameKing_ResetCounter();
+    HumanPlayerMove_MoveBecameKing_SetHumanHasKing();
+    HumanPlayerMove_SimpleEat_ResetCounter();
+    HumanPlayerMove_SimpleEat_ResetComputerHasKing();
+    HumanPlayerMove_UselessMove_IncrementCounter();
+    HumanPlayerMove_WrongInput_ErrorMessage();
     return 0;
 }

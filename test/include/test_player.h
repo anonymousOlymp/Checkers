@@ -29,6 +29,20 @@ void HumanPlayerMove_MoveBecameKing_MoveConditions();
 
 void HumanPlayerMove_EatBecameKingSimple_MoveConditions();
 
+void HumanPlayerMove_DoubleMoveKing_MoveConditions();
+
+void HumanPlayerMove_MoveBecameKing_ResetCounter();
+
+void HumanPlayerMove_MoveBecameKing_SetHumanHasKing();
+
+void HumanPlayerMove_SimpleEat_ResetCounter();
+
+void HumanPlayerMove_SimpleEat_ResetComputerHasKing();
+
+void HumanPlayerMove_UselessMove_IncrementCounter();
+
+void HumanPlayerMove_WrongInput_ErrorMessage();
+
 void HumanPlayerMove_SimpleMove_MoveConditions();
 
 void HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();
