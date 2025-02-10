@@ -1,5 +1,6 @@
 #include "board.h"
 
+#include <execution>
 #include <sstream>
 
 #include "checker.h"
@@ -51,19 +52,39 @@ void Board::set_state(State state) noexcept { state_ = state; }
 void Board::set_orientation(char orientation) noexcept { side_ = orientation; }
 
 void Board::process_human_checkers(const Functor &functor) const {
-    for (const auto &position_to_checker : board_) {
-        if (position_to_checker.second.get_side() == side_) {
-            functor(position_to_checker.first, position_to_checker.second);
+    // for (const auto &position_to_checker : board_) {
+    //     if (position_to_checker.second.get_side() == side_) {
+    //         functor(position_to_checker.first, position_to_checker.second);
+    //     }
+    // }
+    std::for_each(
+        std::execution::par,
+        board_.cbegin(),
+        board_.cend(),
+        [&functor, this](const auto &position_to_checker) {
+            if (position_to_checker.second.get_side() == side_) {
+                functor(position_to_checker.first, position_to_checker.second);
+            }
         }
-    }
+    );
 }
 
 void Board::process_computer_checkers(const Functor &functor) const {
-    for (const auto &position_to_checker : board_) {
-        if (position_to_checker.second.get_side() != side_) {
-            functor(position_to_checker.first, position_to_checker.second);
+    // for (const auto &position_to_checker : board_) {
+    //     if (position_to_checker.second.get_side() != side_) {
+    //         functor(position_to_checker.first, position_to_checker.second);
+    //     }
+    // }
+    std::for_each(
+        std::execution::par,
+        board_.cbegin(),
+        board_.cend(),
+        [&functor, this](const auto &position_to_checker) {
+            if (position_to_checker.second.get_side() != side_) {
+                functor(position_to_checker.first, position_to_checker.second);
+            }
         }
-    }
+    );
 }
 
 bool Board::has_computer_checker(Position position) const {

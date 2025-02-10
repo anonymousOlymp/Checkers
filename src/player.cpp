@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include <unordered_set>
+#include <execution>
 
 #include "board.h"
 #include "checker.h"
@@ -93,9 +94,17 @@ bool HumanPlayer::try_do_move(const Move &move, const Positions &necessary_to_mo
             if (result != MoveResult::FAIL) {
                 board_.reset_stagnation_counter();
                 board_.set_has_computer_king(false);
-                for (Position position : eaten_checkers) {
-                    board_.remove_checker(position);
-                }
+                // for (Position position : eaten_checkers) {
+                //     board_.remove_checker(position);
+                // }
+                std::for_each(
+                    std::execution::par,
+                    eaten_checkers.cbegin(),
+                    eaten_checkers.cend(),
+                    [this](Position position) {
+                        board_.remove_checker(position);
+                    }
+                );
                 board_.add_checker(move.second, moved);
                 return true;
             }
@@ -190,9 +199,17 @@ bool HumanPlayer::is_move_correct(const Move &move,
                 board_.reset_stagnation_counter();
                 board_.set_has_computer_king(false);
             }
-            for (Position position : eaten_checkers) {
-                board_.remove_checker(position);
-            }
+            // for (Position position : eaten_checkers) {
+            //     board_.remove_checker(position);
+            // }
+            std::for_each(
+                    std::execution::par,
+                    eaten_checkers.cbegin(),
+                    eaten_checkers.cend(),
+                    [this](Position position) {
+                        board_.remove_checker(position);
+                    }
+                );
             if (is_king) {
                 moved.set_king();
             }
@@ -323,9 +340,17 @@ void ComputerPlayer::move() {
         board_.reset_stagnation_counter();
         board_.set_has_human_king(false);
     }
-    for (Position position : eaten) {
-        board_.remove_checker(position);
-    }
+    // for (Position position : eaten) {
+    //     board_.remove_checker(position);
+    // }
+    std::for_each(
+                    std::execution::par,
+                    eaten.cbegin(),
+                    eaten.cend(),
+                    [this](Position position) {
+                        board_.remove_checker(position);
+                    }
+                );
     Position next = chosen_move.second;
     if (board_.has_computer_king() && board_.has_human_king()) {
         board_.increment_stagnation_counter();
