@@ -205,7 +205,9 @@ void BoardProcessComputerCheckers_TrueValues_ProcessResult(char human_side) {
     board.add_checker(addable, checker);
 
     board.process_computer_checkers(
-        [&result, addable](Position p, const Checker &) { result = (p == addable); });
+        [&result, addable](Position p, const Checker &) {
+            result = (p == addable);
+        });
 
     assertTrue(result);
 }
@@ -227,7 +229,7 @@ void BoardHasHumanChecker_OppositeChecker_ReturnsFalse(char human_side) {
     board.add_checker(position, checker);
 
     bool result = board.has_human_checker(position);
-    
+
     assertFalse(result);
 }
 
@@ -239,7 +241,7 @@ void BoardHasHumanChecker_HumanChecker_ReturnsTrue(char human_side) {
     board.add_checker(position, checker);
 
     bool result = board.has_human_checker(position);
-    
+
     assertTrue(result);
 }
 
@@ -260,7 +262,7 @@ void BoardHasComputerChecker_OppositeChecker_ReturnsFalse(char human_side) {
     board.add_checker(position, checker);
 
     bool result = board.has_computer_checker(position);
-    
+
     assertFalse(result);
 }
 
@@ -272,7 +274,7 @@ void BoardHasComputerChecker_HumanChecker_ReturnsTrue(char human_side) {
     board.add_checker(position, checker);
 
     bool result = board.has_computer_checker(position);
-    
+
     assertTrue(result);
 }
 
@@ -282,7 +284,7 @@ void BoardGetFreeMoves_CenterFree_ReturnsAll() {
     Position position = Position::from_string("C5");
 
     Moves result = board.get_free_moves(position);
-    
+
     assertEquals(result.size(), 4);
 }
 
@@ -292,9 +294,10 @@ void BoardGetFreeMoves_CornerFree_ReturnsOne() {
     Position position = Position::from_string("A1");
 
     Moves result = board.get_free_moves(position);
-    
+
     assertEquals(result.size(), 1);
-    assertEquals(static_cast<int>(static_cast<Direction>(result[0])), static_cast<int>(Direction::UP_RIGHT));
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])),
+                 static_cast<int>(Direction::UP_RIGHT));
 }
 
 void BoardGetFreeMoves_NotFree_ReturnsThree(char side) {
@@ -305,7 +308,7 @@ void BoardGetFreeMoves_NotFree_ReturnsThree(char side) {
     board.add_checker(position + Direction::UP_LEFT, checker);
 
     Moves result = board.get_free_moves(position);
-    
+
     assertEquals(result.size(), 3);
 }
 
@@ -315,7 +318,7 @@ void BoardGetEatMoves_CenterFree_ReturnsNone() {
     Position position = Position::from_string("C5");
 
     Moves result = board.get_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -328,7 +331,7 @@ void BoardGetEatMoves_CenterWithSameChecker_ReturnsNone() {
     board.add_checker(position + Direction::DOWN_LEFT, checker);
 
     Moves result = board.get_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -342,9 +345,10 @@ void BoardGetEatMoves_CenterWithOppositeChecker_ReturnsOne() {
     board.add_checker(position + direction, checker);
 
     Moves result = board.get_eat_moves(position, true);
-    
+
     assertEquals(result.size(), 1);
-    assertEquals(static_cast<int>(static_cast<Direction>(result[0])), static_cast<int>(direction));
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])),
+                 static_cast<int>(direction));
 }
 
 void BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone() {
@@ -359,7 +363,7 @@ void BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone() {
     board.add_checker(next + direction, checker);
 
     Moves result = board.get_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -375,7 +379,7 @@ void BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone() {
     board.add_checker(next + direction, Checker(current_side));
 
     Moves result = board.get_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -390,7 +394,7 @@ void BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone() {
     board.add_checker(position, checker);
 
     Moves result = board.get_eat_moves(next, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -400,7 +404,7 @@ void BoardGetKingEatMoves_CenterFree_ReturnsNone() {
     Position position = Position::from_string("C5");
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -413,7 +417,7 @@ void BoardGetKingEatMoves_CenterWithSameChecker_ReturnsNone() {
     board.add_checker(position + Direction::DOWN_LEFT, checker);
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -427,9 +431,10 @@ void BoardGetKingEatMoves_CenterWithOppositeChecker_ReturnsOne() {
     board.add_checker(position + direction, checker);
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertEquals(result.size(), 1);
-    assertEquals(static_cast<int>(static_cast<Direction>(result[0])), static_cast<int>(direction));
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])),
+                 static_cast<int>(direction));
 }
 
 void BoardGetKingEatMoves_CenterWithTwoOppositeChecker_ReturnsNone() {
@@ -444,7 +449,7 @@ void BoardGetKingEatMoves_CenterWithTwoOppositeChecker_ReturnsNone() {
     board.add_checker(next + direction, checker);
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -460,7 +465,7 @@ void BoardGetKingEatMoves_CenterWithTwoChecker_ReturnsNone() {
     board.add_checker(next + direction, Checker(current_side));
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -475,7 +480,7 @@ void BoardGetKingEatMoves_CornerWithOppositeChecker_ReturnsNone() {
     board.add_checker(position, checker);
 
     Moves result = board.get_king_eat_moves(next, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -485,10 +490,11 @@ void BoardGetKingEatMoves_CenterWithSameCheckerFarAway_ReturnsNone() {
     board.set_orientation(current_side);
     Position position = Position::from_string("C5");
     Checker checker(current_side);
-    board.add_checker(position + Direction::DOWN_LEFT + Direction::DOWN_LEFT, checker);
+    board.add_checker(position + Direction::DOWN_LEFT + Direction::DOWN_LEFT,
+                      checker);
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -502,9 +508,10 @@ void BoardGetKingEatMoves_CenterWithOppositeCheckerFarAway_ReturnsOne() {
     board.add_checker(position + direction + direction, checker);
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertEquals(result.size(), 1);
-    assertEquals(static_cast<int>(static_cast<Direction>(result[0])), static_cast<int>(direction));
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])),
+                 static_cast<int>(direction));
 }
 
 void BoardGetKingEatMoves_CenterWithTwoOppositeCheckerFarAway_ReturnsNone() {
@@ -519,7 +526,7 @@ void BoardGetKingEatMoves_CenterWithTwoOppositeCheckerFarAway_ReturnsNone() {
     board.add_checker(next + direction, checker);
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -535,7 +542,7 @@ void BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone() {
     board.add_checker(next + direction, Checker(current_side));
 
     Moves result = board.get_king_eat_moves(position, true);
-    
+
     assertTrue(result.empty());
 }
 
@@ -550,11 +557,12 @@ void BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone() {
     board.add_checker(position, checker);
 
     Moves result = board.get_king_eat_moves(next, true);
-    
+
     assertTrue(result.empty());
 }
 
-void BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(std::string position, char orientation, bool is_human, bool expected) {
+void BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+    std::string position, char orientation, bool is_human, bool expected) {
     Position p = Position::from_string(position);
     Board board;
     board.set_orientation(orientation);

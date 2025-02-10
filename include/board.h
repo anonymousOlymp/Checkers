@@ -37,10 +37,9 @@ public:
     void remove_checker(Position position);
     void add_checker(Position position, Checker checker);
     const Checker &get_checker(Position position) const;
-    Moves get_free_moves(Position position) const; // TODO divide to king and others
-    Moves get_eat_moves(Position position, char current_side = '\0') const; // TODO remove
+    Moves get_free_moves(
+        Position position) const;  // TODO divide to king and others
     Moves get_eat_moves(Position position, bool is_human) const;
-    Moves get_king_eat_moves(Position position) const; // TODO remove
     Moves get_king_eat_moves(Position position, bool is_human) const;
     char get_side() const;
     bool has_human_king() const;
@@ -60,7 +59,6 @@ private:
     bool has_computer_king_ = false;
     int stagnation_counter_ = 0;
 
-    static std::vector<Position> get_neighbors_positions(Position position);
     char position_to_char(Position position) const;
 };
 

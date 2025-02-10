@@ -202,17 +202,29 @@ int main(int argc, const char** argv) {
     BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone();
     BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone();
 
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("C5", 'W', true, false);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("C5", 'B', true, false);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("C5", 'W', false, false);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("C5", 'B', false, false);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("D8", 'W', true, true);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("D8", 'B', true, false);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("E1", 'W', true, false);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("E1", 'B', true, true);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("D8", 'W', false, false);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("D8", 'B', false, true);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("E1", 'W', false, true);
-    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected("E1", 'B', false, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "C5", 'W', true, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "C5", 'B', true, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "C5", 'W', false, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "C5", 'B', false, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "D8", 'W', true, true);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "D8", 'B', true, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "E1", 'W', true, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "E1", 'B', true, true);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "D8", 'W', false, false);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "D8", 'B', false, true);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "E1", 'W', false, true);
+    BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+        "E1", 'B', false, false);
     return 0;
 }

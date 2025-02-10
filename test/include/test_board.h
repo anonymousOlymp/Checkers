@@ -1,9 +1,10 @@
 #ifndef TEST_BOARD_H
 #define TEST_BOARD_H
 
-#include  "board.h"
+#include "board.h"
 
-void BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere(const std::string &position, bool expected, char type = '\0');
+void BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere(
+    const std::string &position, bool expected, char type = '\0');
 
 void BoardToString_BeginingHumanWhite_ReturnsString();
 
@@ -79,6 +80,7 @@ void BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone();
 
 void BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone();
 
-void BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(std::string position, char orientation, bool is_human, bool expected);
+void BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
+    std::string position, char orientation, bool is_human, bool expected);
 
-#endif // TEST_BOARD_H
+#endif  // TEST_BOARD_H
