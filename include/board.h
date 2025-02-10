@@ -38,7 +38,9 @@ public:
     void add_checker(Position position, Checker checker);
     const Checker &get_checker(Position position) const;
     Moves get_free_moves(
-        Position position) const;  // TODO divide to king and others
+        Position position) const;  // TODO remove
+    Moves get_free_moves(Position position, bool is_human) const;
+    Moves get_king_free_moves(Position position) const;
     Moves get_eat_moves(Position position, bool is_human) const;
     Moves get_king_eat_moves(Position position, bool is_human) const;
     char get_side() const;

@@ -101,6 +101,40 @@ Moves Board::get_free_moves(Position position) const {
     return result;
 }
 
+Moves Board::get_free_moves(Position position, bool is_human) const {
+    std::vector<Move> result;
+    std::vector<Direction> appropriate_directions;
+    if (is_human ^ (side_ == 'B')) {
+        appropriate_directions = { Direction::UP_LEFT, Direction::UP_RIGHT };
+    } else {
+        appropriate_directions = { Direction::DOWN_LEFT, Direction::DOWN_RIGHT };
+    }
+    for (auto direction : appropriate_directions) {
+        if (exists(position, direction)) {
+            Position next = position + direction;
+            if (!has_checker(next)) {
+                result.emplace_back(position, next);
+            }
+        }
+    }
+    return result;
+}
+
+Moves Board::get_king_free_moves(Position position) const {
+    std::vector<Move> result;
+    for (auto direction : get_all_direction_values()) {
+        Position next = position;
+        while (exists(next, direction)) {
+            next = next + direction;
+            if (has_checker(next)) {
+                break;
+            }
+            result.emplace_back(position, next);
+        }
+    }
+    return result;
+}
+
 Moves Board::get_eat_moves(Position position, bool is_human) const {
     std::vector<Move> result;
     char current_side = (is_human) ? side_ : ('W' + 'H' - side_);

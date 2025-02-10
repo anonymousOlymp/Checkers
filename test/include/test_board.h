@@ -46,6 +46,20 @@ void BoardGetFreeMoves_CornerFree_ReturnsOne();
 
 void BoardGetFreeMoves_NotFree_ReturnsThree(char side);
 
+void BoardGetFreeMovesBool_CenterFree_ReturnsTwo();
+
+void BoardGetFreeMovesBool_CornerFreeWhite_ReturnsOne();
+
+void BoardGetFreeMovesBool_CornerFreeBlack_ReturnsOne();
+
+void BoardGetFreeMovesBool_NotFree_ReturnsOne(char side);
+
+void BoardGetFreeMovesKing_CenterFree_ReturnsEleven();
+
+void BoardGetFreeMovesKing_CornerFree_ReturnsSeven();
+
+void BoardGetFreeMovesKing_NotFree_ReturnsZero(char side);
+
 void BoardGetEatMoves_CenterFree_ReturnsNone();
 
 void BoardGetEatMoves_CenterWithSameChecker_ReturnsNone();

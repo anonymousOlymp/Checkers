@@ -312,6 +312,84 @@ void BoardGetFreeMoves_NotFree_ReturnsThree(char side) {
     assertEquals(result.size(), 3);
 }
 
+void BoardGetFreeMovesBool_CenterFree_ReturnsTwo() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("C5");
+
+    Moves result = board.get_free_moves(position, true);
+
+    assertEquals(result.size(), 2);
+}
+
+void BoardGetFreeMovesBool_CornerFreeWhite_ReturnsOne() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("A1");
+
+    Moves result = board.get_free_moves(position, true);
+
+    assertEquals(result.size(), 1);
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])),
+                 static_cast<int>(Direction::UP_RIGHT));
+}
+
+void BoardGetFreeMovesBool_CornerFreeBlack_ReturnsOne() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("H8");
+
+    Moves result = board.get_free_moves(position, false);
+
+    assertEquals(result.size(), 1);
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])),
+                 static_cast<int>(Direction::DOWN_LEFT));
+}
+
+void BoardGetFreeMovesBool_NotFree_ReturnsOne(char side) {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("C5");
+    Checker checker(side);
+    board.add_checker(position + Direction::UP_LEFT, checker);
+
+    Moves result = board.get_free_moves(position, true);
+
+    assertEquals(result.size(), 1);
+}
+
+void BoardGetFreeMovesKing_CenterFree_ReturnsEleven() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("C5");
+
+    Moves result = board.get_king_free_moves(position);
+
+    assertEquals(result.size(), 11);
+}
+
+void BoardGetFreeMovesKing_CornerFree_ReturnsSeven() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("A1");
+
+    Moves result = board.get_king_free_moves(position);
+
+    assertEquals(result.size(), 7);
+}
+
+void BoardGetFreeMovesKing_NotFree_ReturnsZero(char side) {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("A1");
+    Checker checker(side);
+    board.add_checker(position + Direction::UP_RIGHT, checker);
+
+    Moves result = board.get_free_moves(position, true);
+
+    assertTrue(result.empty());
+}
+
 void BoardGetEatMoves_CenterFree_ReturnsNone() {
     Board board = Board();
     board.set_orientation('W');

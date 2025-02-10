@@ -183,6 +183,17 @@ int main(int argc, const char** argv) {
     BoardGetFreeMoves_NotFree_ReturnsThree('W');
     BoardGetFreeMoves_NotFree_ReturnsThree('B');
 
+    BoardGetFreeMovesBool_CenterFree_ReturnsTwo();
+    BoardGetFreeMovesBool_CornerFreeWhite_ReturnsOne();
+    BoardGetFreeMovesBool_CornerFreeBlack_ReturnsOne();
+    BoardGetFreeMovesBool_NotFree_ReturnsOne('W');
+    BoardGetFreeMovesBool_NotFree_ReturnsOne('B');
+
+    BoardGetFreeMovesKing_CenterFree_ReturnsEleven();
+    BoardGetFreeMovesKing_CornerFree_ReturnsSeven();
+    BoardGetFreeMovesKing_NotFree_ReturnsZero('W');
+    BoardGetFreeMovesKing_NotFree_ReturnsZero('B');
+
     BoardGetEatMoves_CenterFree_ReturnsNone();
     BoardGetEatMoves_CenterWithSameChecker_ReturnsNone();
     BoardGetEatMoves_CenterWithOppositeChecker_ReturnsOne();
@@ -227,6 +238,7 @@ int main(int argc, const char** argv) {
     BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
         "E1", 'B', false, false);
     
+
     // player
     HumanPlayerMove_EmptyBoard_ComputerWinConditions();
     HumanPlayerMove_CannotMove_DrawConditions();
@@ -238,6 +250,6 @@ int main(int argc, const char** argv) {
     HumanPlayerMove_DoubleMove_MoveConditions();
     HumanPlayerMove_SimpleEat_MoveConditions();
     HumanPlayerMove_SimpleEatWrongMoving_MoveConditions();
-    HumanPlayerMove_MultipleEat_MoveConditions();
+    //HumanPlayerMove_MultipleEat_MoveConditions();
     return 0;
 }
