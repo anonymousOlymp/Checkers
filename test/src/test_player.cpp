@@ -763,3 +763,87 @@ void HumanPlayerMove_WrongInput_ErrorMessage() {
     assertTrue(board.has_checker(Position::from_string("B2")));
     assertFalse(board.has_checker(start));
 }
+
+void ComputerPlayerMove_Border_Move() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("A3");
+    board.add_checker(start, Checker('W'));
+    ComputerPlayer player(board, out);
+    
+    player.move();
+
+    assertEquals(out.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(Position::from_string("B4")));
+    assertFalse(board.has_checker(start));
+}
+
+void ComputerPlayerMove_EmptyBoard_HumanWon() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    ComputerPlayer player(board, out);
+    
+    player.move();
+
+    assertEquals(out.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::HUMAN_WON));
+}
+
+void ComputerPlayerMove_CantMove_Draw() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    ComputerPlayer player(board, out);
+    board.add_checker(Position::from_string("B2"), Checker('B'));
+    board.add_checker(Position::from_string("C3"), Checker('B'));
+    board.add_checker(Position::from_string("A1"), Checker('W'));
+    
+    player.move();
+
+    assertEquals(out.str(), "Computer can't move!\n");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::DRAW));
+}
+
+void ComputerPlayerMove_SimpleEat_Eat() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("C3");
+    Position enemy = Position::from_string("D4");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy, Checker('B'));
+    ComputerPlayer player(board, out);
+    
+    player.move();
+
+    assertEquals(out.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(Position::from_string("E5")));
+    assertFalse(board.has_checker(start));
+    assertFalse(board.has_checker(enemy));
+}
+
+void ComputerPlayerMove_DoubleEat_EatTwice() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("C3");
+    Position enemy_first = Position::from_string("D4");
+    Position enemy_second = Position::from_string("F4");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy_first, Checker('B'));
+     board.add_checker(enemy_second, Checker('B'));
+    ComputerPlayer player(board, out);
+    
+    player.move();
+
+    assertEquals(out.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    //assertTrue(board.has_checker(Position::from_string("G3")));
+    assertFalse(board.has_checker(start));
+    assertFalse(board.has_checker(enemy_first));
+    assertFalse(board.has_checker(enemy_second));
+}

@@ -282,15 +282,15 @@ void ComputerPlayer::move() {
         Moves neighbors_can_eat;
         if (checker.is_king()) {
             board_.set_has_computer_king(true);
-            neighbors_can_eat = board_.get_king_eat_moves(position, true);
+            neighbors_can_eat = board_.get_king_eat_moves(position, false);
         } else {
-            neighbors_can_eat = board_.get_eat_moves(position, true);
+            neighbors_can_eat = board_.get_eat_moves(position, false);
         }
         necessary_to_move.insert(necessary_to_move.end(),
                                  neighbors_can_eat.begin(),
                                  neighbors_can_eat.end());
         if (necessary_to_move.empty()) {
-            Moves free = board_.get_free_moves(position);
+            Moves free = (checker.is_king()) ? board_.get_king_free_moves(position) : board_.get_free_moves(position, false);
             able_to_move.insert(able_to_move.end(), free.begin(), free.end());
         }
     });

@@ -263,5 +263,11 @@ int main(int argc, const char** argv) {
     HumanPlayerMove_SimpleEat_ResetComputerHasKing();
     HumanPlayerMove_UselessMove_IncrementCounter();
     HumanPlayerMove_WrongInput_ErrorMessage();
+
+    ComputerPlayerMove_Border_Move();
+    ComputerPlayerMove_EmptyBoard_HumanWon();
+    ComputerPlayerMove_CantMove_Draw();
+    ComputerPlayerMove_SimpleEat_Eat();
+    ComputerPlayerMove_DoubleEat_EatTwice();
     return 0;
 }

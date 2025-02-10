@@ -43,6 +43,16 @@ void HumanPlayerMove_UselessMove_IncrementCounter();
 
 void HumanPlayerMove_WrongInput_ErrorMessage();
 
+void ComputerPlayerMove_Border_Move();
+
+void ComputerPlayerMove_EmptyBoard_HumanWon();
+
+void ComputerPlayerMove_CantMove_Draw();
+
+void ComputerPlayerMove_SimpleEat_Eat();
+
+void ComputerPlayerMove_DoubleEat_EatTwice();
+
 void HumanPlayerMove_SimpleMove_MoveConditions();
 
 void HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();
