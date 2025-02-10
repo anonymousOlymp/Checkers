@@ -38,6 +38,11 @@ Move::operator Direction() const {
     throw std::logic_error("Error. Some coordinates are equal!");
 }
 
+std::vector<Direction> get_all_direction_values() {
+    return {Direction::DOWN_LEFT, Direction::DOWN_RIGHT, Direction::UP_LEFT,
+            Direction::UP_RIGHT};
+}
+
 Position operator+(Position position, Direction direction) {
     switch (direction) {
     case Direction::DOWN_RIGHT:

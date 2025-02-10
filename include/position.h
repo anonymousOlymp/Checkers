@@ -6,6 +6,7 @@
 #include <string>
 
 enum class Direction { UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT };
+std::vector<Direction> get_all_direction_values();
 
 struct Position {
 public:
