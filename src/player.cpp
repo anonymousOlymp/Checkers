@@ -151,7 +151,7 @@ HumanPlayer::MoveResult HumanPlayer::try_eat(Move move, Position goal, bool is_k
             }
         }
         if (!can_eat) {
-            if (goal == move.second) {
+            if (goal == next) {
                 if (is_king) {
                     return MoveResult::SUCCESS_KING;
                 }

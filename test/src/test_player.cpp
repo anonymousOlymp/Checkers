@@ -4,6 +4,7 @@
 
 #include "checker.h"
 #include "player.h"
+#include "position.h"
 #include "test.h"
 
 void HumanPlayerMove_EmptyBoard_ComputerWinConditions() {
@@ -333,5 +334,81 @@ void HumanPlayerMove_MultipleEat_MoveConditions() {
     assertFalse(board.has_checker(start));
     assertFalse(board.has_checker(enemy_first));
     assertFalse(board.has_checker(enemy_second));
+}
+
+void HumanPlayerMove_MultipleEatAndReturns_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("C1");
+    Position enemy_first = Position::from_string("B2");
+    Position enemy_second = Position::from_string("B4");
+    Position enemy_third = Position::from_string("D2");
+    Position enemy_fourth = Position::from_string("D4");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy_first, Checker('B'));
+    board.add_checker(enemy_second, Checker('B'));
+    board.add_checker(enemy_third, Checker('B'));
+    board.add_checker(enemy_fourth, Checker('B'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|........\n"
+        "6|........\n"
+        "5|........\n"
+        "4|.B.B....\n"
+        "3|........\n"
+        "2|.B.B....\n"
+        "1|..W.....\n"
+        "Your move: ";
+    in << "C1 C1\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(start));
+    assertFalse(board.has_checker(enemy_first));
+    assertFalse(board.has_checker(enemy_second));
+    assertFalse(board.has_checker(enemy_third));
+    assertFalse(board.has_checker(enemy_fourth));
+}
+
+void HumanPlayerMove_MoveThrough_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("B2");
+    Position fixed = Position::from_string("A1");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(fixed, Checker('W'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|........\n"
+        "6|........\n"
+        "5|........\n"
+        "4|........\n"
+        "3|........\n"
+        "2|.W......\n"
+        "1|W.......\n"
+        "Your move: "
+        "Your move: ";
+    in << "A1 B2\nB2 C3\n";
+    std::string expected_err = "Error. Wrong move: A1 B2 Try again!\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), expected_err);
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(Position::from_string("C3")));
+    assertFalse(board.has_checker(start));
+    assertTrue(board.has_checker(fixed));
 }
 

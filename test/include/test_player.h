@@ -19,6 +19,10 @@ void HumanPlayerMove_SimpleEatWrongMoving_MoveConditions();
 
 void HumanPlayerMove_MultipleEat_MoveConditions();
 
+void HumanPlayerMove_MultipleEatAndReturns_MoveConditions();
+
+void HumanPlayerMove_MoveThrough_MoveConditions();
+
 void HumanPlayerMove_SimpleMove_MoveConditions();
 
 void HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();

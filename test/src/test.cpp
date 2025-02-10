@@ -250,6 +250,8 @@ int main(int argc, const char** argv) {
     HumanPlayerMove_DoubleMove_MoveConditions();
     HumanPlayerMove_SimpleEat_MoveConditions();
     HumanPlayerMove_SimpleEatWrongMoving_MoveConditions();
-    //HumanPlayerMove_MultipleEat_MoveConditions();
+    HumanPlayerMove_MultipleEat_MoveConditions();
+    HumanPlayerMove_MultipleEatAndReturns_MoveConditions();
+    HumanPlayerMove_MoveThrough_MoveConditions();
     return 0;
 }
