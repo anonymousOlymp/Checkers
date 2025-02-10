@@ -78,6 +78,10 @@ void BoardGetKingEatMoves_CenterWithSameChecker_ReturnsNone();
 
 void BoardGetKingEatMoves_CenterWithOppositeChecker_ReturnsOne();
 
+void BoardGetEatMoves_CenterWithOppositeCheckerForComputer_ReturnsNone();
+
+void BoardGetKingEatMoves_CenterWithOppositeCheckerForComputer_ReturnsNone();
+
 void BoardGetKingEatMoves_CenterWithTwoOppositeChecker_ReturnsNone();
 
 void BoardGetKingEatMoves_CenterWithTwoChecker_ReturnsNone();

@@ -137,7 +137,7 @@ Moves Board::get_king_free_moves(Position position) const {
 
 Moves Board::get_eat_moves(Position position, bool is_human) const {
     std::vector<Move> result;
-    char current_side = (is_human) ? side_ : ('W' + 'H' - side_);
+    char current_side = (is_human) ? side_ : ('W' + 'B' - side_);
     for (auto direction : get_all_direction_values()) {
         if (exists(position, direction)) {
             Position next = position + direction;
@@ -157,7 +157,7 @@ Moves Board::get_eat_moves(Position position, bool is_human) const {
 
 Moves Board::get_king_eat_moves(Position position, bool is_human) const {
     std::vector<Move> result;
-    char current_side = (is_human) ? side_ : ('W' + 'H' - side_);
+    char current_side = (is_human) ? side_ : ('W' + 'B' - side_);
     for (auto direction : get_all_direction_values()) {
         Position current = position;
         while (exists(current, direction)) {

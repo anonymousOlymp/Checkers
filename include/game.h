@@ -5,6 +5,7 @@
 #include <ostream>
 #include <queue>
 
+#include "board.h"
 #include "player.h"
 class Game {
 public:
@@ -23,7 +24,7 @@ public:
 
 private:
     std::queue<std::shared_ptr<Player>> players_;
-    Board board_;
+    Board board_ = Board::create_begining_board();
     std::ostream &out_;
     std::ostream &err_;
     std::istream &in_;

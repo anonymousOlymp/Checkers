@@ -418,7 +418,7 @@ void BoardGetEatMoves_CenterWithOppositeChecker_ReturnsOne() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("C5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     board.add_checker(position + direction, checker);
 
@@ -429,12 +429,26 @@ void BoardGetEatMoves_CenterWithOppositeChecker_ReturnsOne() {
                  static_cast<int>(direction));
 }
 
+void BoardGetEatMoves_CenterWithOppositeCheckerForComputer_ReturnsNone() {
+    Board board = Board();
+    char current_side = 'W';
+    board.set_orientation(current_side);
+    Position position = Position::from_string("C5");
+    Checker checker('B' + 'W' - current_side);
+    Direction direction = Direction::UP_LEFT;
+    board.add_checker(position + direction, checker);
+
+    Moves result = board.get_eat_moves(position, false);
+
+    assertEquals(result.size(), 0);
+}
+
 void BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone() {
     Board board = Board();
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("C5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     Position next = position + direction;
     board.add_checker(next, checker);
@@ -450,7 +464,7 @@ void BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("C5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     Position next = position + direction;
     board.add_checker(next, checker);
@@ -466,7 +480,7 @@ void BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("A1");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_RIGHT;
     Position next = position + direction;
     board.add_checker(position, checker);
@@ -504,7 +518,7 @@ void BoardGetKingEatMoves_CenterWithOppositeChecker_ReturnsOne() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("C5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     board.add_checker(position + direction, checker);
 
@@ -515,12 +529,26 @@ void BoardGetKingEatMoves_CenterWithOppositeChecker_ReturnsOne() {
                  static_cast<int>(direction));
 }
 
+void BoardGetKingEatMoves_CenterWithOppositeCheckerForComputer_ReturnsNone() {
+    Board board = Board();
+    char current_side = 'W';
+    board.set_orientation(current_side);
+    Position position = Position::from_string("C5");
+    Checker checker('B' + 'W' - current_side);
+    Direction direction = Direction::UP_LEFT;
+    board.add_checker(position + direction, checker);
+
+    Moves result = board.get_king_eat_moves(position, false);
+
+    assertEquals(result.size(), 0);
+}
+
 void BoardGetKingEatMoves_CenterWithTwoOppositeChecker_ReturnsNone() {
     Board board = Board();
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("C5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     Position next = position + direction;
     board.add_checker(next, checker);
@@ -536,7 +564,7 @@ void BoardGetKingEatMoves_CenterWithTwoChecker_ReturnsNone() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("C5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     Position next = position + direction;
     board.add_checker(next, checker);
@@ -552,7 +580,7 @@ void BoardGetKingEatMoves_CornerWithOppositeChecker_ReturnsNone() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("A1");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_RIGHT;
     Position next = position + direction;
     board.add_checker(position, checker);
@@ -581,7 +609,7 @@ void BoardGetKingEatMoves_CenterWithOppositeCheckerFarAway_ReturnsOne() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("D5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     board.add_checker(position + direction + direction, checker);
 
@@ -597,7 +625,7 @@ void BoardGetKingEatMoves_CenterWithTwoOppositeCheckerFarAway_ReturnsNone() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("E5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     Position next = position + direction + direction;
     board.add_checker(next, checker);
@@ -613,7 +641,7 @@ void BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("E5");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_LEFT;
     Position next = position + direction + direction;
     board.add_checker(next, checker);
@@ -629,7 +657,7 @@ void BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone() {
     char current_side = 'W';
     board.set_orientation(current_side);
     Position position = Position::from_string("A1");
-    Checker checker('H' + 'W' - current_side);
+    Checker checker('B' + 'W' - current_side);
     Direction direction = Direction::UP_RIGHT;
     Position next = position + direction + direction;
     board.add_checker(position, checker);

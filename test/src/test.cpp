@@ -200,6 +200,7 @@ int main(int argc, const char** argv) {
     BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone();
     BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone();
     BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone();
+    BoardGetEatMoves_CenterWithOppositeCheckerForComputer_ReturnsNone();
 
     BoardGetKingEatMoves_CenterFree_ReturnsNone();
     BoardGetKingEatMoves_CenterWithSameChecker_ReturnsNone();
@@ -212,6 +213,7 @@ int main(int argc, const char** argv) {
     BoardGetKingEatMoves_CenterWithTwoOppositeCheckerFarAway_ReturnsNone();
     BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone();
     BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone();
+    BoardGetKingEatMoves_CenterWithOppositeCheckerForComputer_ReturnsNone();
 
     BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
         "C5", 'W', true, false);
