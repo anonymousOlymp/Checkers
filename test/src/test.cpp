@@ -170,5 +170,12 @@ int main(int argc, const char** argv) {
     BoardHasHumanChecker_OppositeChecker_ReturnsFalse('B');
     BoardHasHumanChecker_HumanChecker_ReturnsTrue('W');
     BoardHasHumanChecker_HumanChecker_ReturnsTrue('B');
+
+    BoardHasComputerChecker_NoChecker_ReturnsFalse('W');
+    BoardHasComputerChecker_NoChecker_ReturnsFalse('B');
+    BoardHasComputerChecker_OppositeChecker_ReturnsFalse('W');
+    BoardHasComputerChecker_OppositeChecker_ReturnsFalse('B');
+    BoardHasComputerChecker_HumanChecker_ReturnsTrue('W');
+    BoardHasComputerChecker_HumanChecker_ReturnsTrue('B');
     return 0;
 }

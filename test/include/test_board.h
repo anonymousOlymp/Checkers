@@ -33,4 +33,10 @@ void BoardHasHumanChecker_OppositeChecker_ReturnsFalse(char human_side);
 
 void BoardHasHumanChecker_HumanChecker_ReturnsTrue(char human_side);
 
+void BoardHasComputerChecker_NoChecker_ReturnsFalse(char human_side);
+
+void BoardHasComputerChecker_OppositeChecker_ReturnsFalse(char human_side);
+
+void BoardHasComputerChecker_HumanChecker_ReturnsTrue(char human_side);
+
 #endif // TEST_BOARD_H

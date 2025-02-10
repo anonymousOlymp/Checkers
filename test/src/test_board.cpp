@@ -242,3 +242,36 @@ void BoardHasHumanChecker_HumanChecker_ReturnsTrue(char human_side) {
     
     assertTrue(result);
 }
+
+void BoardHasComputerChecker_NoChecker_ReturnsFalse(char human_side) {
+    Board board = Board();
+    board.set_orientation(human_side);
+
+    bool result = board.has_computer_checker(Position::from_string("A1"));
+
+    assertFalse(result);
+}
+
+void BoardHasComputerChecker_OppositeChecker_ReturnsFalse(char human_side) {
+    Board board = Board();
+    board.set_orientation(human_side);
+    Position position = Position::from_string("A1");
+    Checker checker(human_side);
+    board.add_checker(position, checker);
+
+    bool result = board.has_computer_checker(position);
+    
+    assertFalse(result);
+}
+
+void BoardHasComputerChecker_HumanChecker_ReturnsTrue(char human_side) {
+    Board board = Board();
+    board.set_orientation(human_side);
+    Position position = Position::from_string("A1");
+    Checker checker('W' + 'B' - human_side);
+    board.add_checker(position, checker);
+
+    bool result = board.has_computer_checker(position);
+    
+    assertTrue(result);
+}
