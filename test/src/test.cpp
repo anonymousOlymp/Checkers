@@ -149,5 +149,19 @@ int main(int argc, const char** argv) {
     BoardToString_HumanBlackWhiteKingInPosition_ReturnsString();
 
     BoardGetState_AfterInit_ReturnsDefault();
+
+    BoardProcessHumanCheckers_NoValues_NoResult('W');
+    BoardProcessHumanCheckers_NoValues_NoResult('B');
+    BoardProcessHumanCheckers_OppositeValues_NoResult('W');
+    BoardProcessHumanCheckers_OppositeValues_NoResult('B');
+    BoardProcessHumanCheckers_ManyValues_ResultHuman('W');
+    BoardProcessHumanCheckers_ManyValues_ResultHuman('B');
+
+    BoardProcessComputerCheckers_NoValues_NoResult('W');
+    BoardProcessComputerCheckers_NoValues_NoResult('B');
+    BoardProcessComputerCheckers_OppositeValues_NoResult('W');
+    BoardProcessComputerCheckers_OppositeValues_NoResult('B');
+    BoardProcessComputerCheckers_TrueValues_ProcessResult('W');
+    BoardProcessComputerCheckers_TrueValues_ProcessResult('B');
     return 0;
 }
