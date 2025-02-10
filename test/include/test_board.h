@@ -13,4 +13,6 @@ void BoardToString_HumanBlackKingInPosition_ReturnsString();
 
 void BoardToString_HumanBlackWhiteKingInPosition_ReturnsString();
 
+void BoardGetState_AfterInit_ReturnsDefault();
+
 #endif // TEST_BOARD_H

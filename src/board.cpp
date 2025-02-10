@@ -48,7 +48,7 @@ Board::State Board::get_state() const noexcept { return state_; }
 
 void Board::set_state(State state) noexcept { state_ = state; }
 
-void Board::set_orientation(char orientation) {
+void Board::set_orientation(char orientation)noexcept {
     side_ = orientation;
 }
 

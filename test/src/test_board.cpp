@@ -1,5 +1,6 @@
 #include "test_board.h"
 
+#include "board.h"
 #include "test.h"
 
 void BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere(const std::string &position, bool expected, char type) {
@@ -89,4 +90,12 @@ void BoardToString_HumanBlackWhiteKingInPosition_ReturnsString() {
     std::string casted = static_cast<std::string>(board);
 
     assertEquals(casted, expected);
+}
+
+void BoardGetState_AfterInit_ReturnsDefault() {
+    Board board = Board();
+    
+    Board::State state = board.get_state();
+
+    assertEquals(static_cast<int>(state), static_cast<int>(Board::State::PLAYING));
 }

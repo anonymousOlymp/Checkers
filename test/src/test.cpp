@@ -147,5 +147,7 @@ int main(int argc, const char** argv) {
     BoardToString_BeginingHumanBlack_ReturnsString();
     BoardToString_HumanBlackKingInPosition_ReturnsString();
     BoardToString_HumanBlackWhiteKingInPosition_ReturnsString();
+
+    BoardGetState_AfterInit_ReturnsDefault();
     return 0;
 }
