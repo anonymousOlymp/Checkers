@@ -229,5 +229,12 @@ int main(int argc, const char** argv) {
     
     // player
     HumanPlayerMove_EmptyBoard_ComputerWinConditions();
+    HumanPlayerMove_CannotMove_DrawConditions();
+    HumanPlayerMove_UselessMoves_DrawConditions();
+    HumanPlayerMove_SimpleMove_MoveConditions();
+    HumanPlayerMove_StraightMove_MoveConditions();
+    HumanPlayerMove_MoveGhost_MoveConditions();
+    HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();
+    HumanPlayerMove_DoubleMove_MoveConditions();
     return 0;
 }

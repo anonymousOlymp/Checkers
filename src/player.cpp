@@ -34,12 +34,12 @@ void HumanPlayer::move() {
         board_.set_state(Board::State::COMPUTER_WON);
         return;
     }
-    out_ << static_cast<std::string>(board_) << std::endl;
     if (board_.has_human_king() && board_.has_computer_king() &&
         board_.get_stagnation_counter() == 15) {
         board_.set_state(Board::State::DRAW);
         return;
     }
+    out_ << static_cast<std::string>(board_) << std::flush;
     if (checkers_necessary_to_move.empty() && checkers_able_to_move.empty()) {
         out_ << "You can't move!" << std::endl;
         board_.set_state(Board::State::DRAW);
@@ -61,7 +61,6 @@ void HumanPlayer::move() {
                       << next_position << " Try again!" << std::endl;
         } else {
             move_is_correct = true;
-            Checker moved = board_.get_checker(current);
             if (board_.has_human_king() && board_.has_computer_king()) {
                 board_.increment_stagnation_counter();
             }
@@ -107,6 +106,7 @@ bool HumanPlayer::is_move_correct(const Move &move,
             return true;
         }
     }
+    board_.add_checker(move.first, moved);
     return false;
 }
 
