@@ -48,9 +48,7 @@ Board::State Board::get_state() const noexcept { return state_; }
 
 void Board::set_state(State state) noexcept { state_ = state; }
 
-void Board::set_orientation(char orientation)noexcept {
-    side_ = orientation;
-}
+void Board::set_orientation(char orientation) noexcept { side_ = orientation; }
 
 void Board::process_human_checkers(const Functor &functor) const {
     for (const auto &position_to_checker : board_) {
@@ -93,12 +91,12 @@ const Checker &Board::get_checker(Position position) const {
 Moves Board::get_free_moves(Position position) const {
     std::vector<Move> result;
     for (auto direction : get_all_direction_values()) {
-        apply_if_exists(position, direction,
-                        [&result, this, position](Position next) {
-                            if (!has_checker(next)) {
-                                result.emplace_back(position, next);
-                            }
-                        });
+        if (exists(position, direction)) {
+            Position next = position + direction;
+            if (!has_checker(next)) {
+                result.emplace_back(position, next);
+            }
+        }
     }
     return result;
 }

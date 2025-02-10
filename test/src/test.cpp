@@ -177,5 +177,10 @@ int main(int argc, const char** argv) {
     BoardHasComputerChecker_OppositeChecker_ReturnsFalse('B');
     BoardHasComputerChecker_HumanChecker_ReturnsTrue('W');
     BoardHasComputerChecker_HumanChecker_ReturnsTrue('B');
+
+    BoardGetFreeMoves_CenterFree_ReturnsAll();
+    BoardGetFreeMoves_CornerFree_ReturnsOne();
+    BoardGetFreeMoves_NotFree_ReturnsThree('W');
+    BoardGetFreeMoves_NotFree_ReturnsThree('B');
     return 0;
 }

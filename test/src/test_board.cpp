@@ -275,3 +275,36 @@ void BoardHasComputerChecker_HumanChecker_ReturnsTrue(char human_side) {
     
     assertTrue(result);
 }
+
+void BoardGetFreeMoves_CenterFree_ReturnsAll() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("C5");
+
+    Moves result = board.get_free_moves(position);
+    
+    assertEquals(result.size(), 4);
+}
+
+void BoardGetFreeMoves_CornerFree_ReturnsOne() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("A1");
+
+    Moves result = board.get_free_moves(position);
+    
+    assertEquals(result.size(), 1);
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])), static_cast<int>(Direction::UP_RIGHT));
+}
+
+void BoardGetFreeMoves_NotFree_ReturnsThree(char side) {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("C5");
+    Checker checker(side);
+    board.add_checker(position + Direction::UP_LEFT, checker);
+
+    Moves result = board.get_free_moves(position);
+    
+    assertEquals(result.size(), 3);
+}

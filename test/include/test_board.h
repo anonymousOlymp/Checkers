@@ -39,4 +39,10 @@ void BoardHasComputerChecker_OppositeChecker_ReturnsFalse(char human_side);
 
 void BoardHasComputerChecker_HumanChecker_ReturnsTrue(char human_side);
 
+void BoardGetFreeMoves_CenterFree_ReturnsAll();
+
+void BoardGetFreeMoves_CornerFree_ReturnsOne();
+
+void BoardGetFreeMoves_NotFree_ReturnsThree(char side);
+
 #endif // TEST_BOARD_H
