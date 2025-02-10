@@ -321,7 +321,7 @@ void ComputerPlayer::move() {
     eat_all(chosen_move, direction, eaten, is_king);
     if (!eaten.empty()) {
         board_.reset_stagnation_counter();
-        board_.set_has_computer_king(false);
+        board_.set_has_human_king(false);
     }
     for (Position position : eaten) {
         board_.remove_checker(position);
@@ -344,12 +344,12 @@ void ComputerPlayer::eat_all(Move &chosen, Direction &direction,
         Position next = chosen.second + direction;
         eaten.insert(chosen.second);
         chosen = Move(chosen.first, next);
-        is_king = board_.is_changed_to_king(next, false);
+        is_king = is_king || board_.is_changed_to_king(next, false);
         Moves eat_positions;
         if (is_king) {
-            eat_positions = board_.get_king_eat_moves(next, true);
+            eat_positions = board_.get_king_eat_moves(next, false);
         } else {
-            eat_positions = board_.get_eat_moves(next, true);
+            eat_positions = board_.get_eat_moves(next, false);
         }
         for (Move eat_move : eat_positions) {
             if (!eaten.contains(eat_move.second)) {

@@ -53,6 +53,18 @@ void ComputerPlayerMove_SimpleEat_Eat();
 
 void ComputerPlayerMove_DoubleEat_EatTwice();
 
+void ComputerPlayerMove_HightEat_BecameKing();
+
+void ComputerPlayerMove_HightEatAndRepeatLater_EatAll();
+
+void ComputerPlayerMove_HightEat_ResetCounter();
+
+void ComputerPlayerMove_SimpleEat_ResetHumanHasKing();
+
+void ComputerPlayerMove_HightEat_SetComputerHasKing();
+
+void ComputerPlayerMove_UselessMove_IncrementCounter();
+
 void HumanPlayerMove_SimpleMove_MoveConditions();
 
 void HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();

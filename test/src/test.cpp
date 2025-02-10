@@ -269,5 +269,11 @@ int main(int argc, const char** argv) {
     ComputerPlayerMove_CantMove_Draw();
     ComputerPlayerMove_SimpleEat_Eat();
     ComputerPlayerMove_DoubleEat_EatTwice();
+    ComputerPlayerMove_HightEat_BecameKing();
+    ComputerPlayerMove_HightEatAndRepeatLater_EatAll();
+    ComputerPlayerMove_HightEat_ResetCounter();
+    ComputerPlayerMove_SimpleEat_ResetHumanHasKing();
+    ComputerPlayerMove_HightEat_SetComputerHasKing();
+    ComputerPlayerMove_UselessMove_IncrementCounter();
     return 0;
 }

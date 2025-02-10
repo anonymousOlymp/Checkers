@@ -842,8 +842,140 @@ void ComputerPlayerMove_DoubleEat_EatTwice() {
 
     assertEquals(out.str(), "");
     assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
-    //assertTrue(board.has_checker(Position::from_string("G3")));
+    assertTrue(board.has_checker(Position::from_string("G3")));
     assertFalse(board.has_checker(start));
     assertFalse(board.has_checker(enemy_first));
     assertFalse(board.has_checker(enemy_second));
+}
+
+void ComputerPlayerMove_HightEat_BecameKing() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("B6");
+    Position enemy = Position::from_string("C7");
+    Position expected = Position::from_string("D8");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy, Checker('B'));
+    ComputerPlayer player(board, out);
+    
+    player.move();
+
+    assertEquals(out.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(expected));
+    assertTrue(board.get_checker(expected).is_king());
+    assertFalse(board.has_checker(start));
+    assertFalse(board.has_checker(enemy));
+}
+
+void ComputerPlayerMove_HightEatAndRepeatLater_EatAll() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("B6");
+    Position enemy_first = Position::from_string("C7");
+    Position enemy_second = Position::from_string("F6");
+    Position expected = Position::from_string("G5");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy_first, Checker('B'));
+    board.add_checker(enemy_second, Checker('B'));
+    ComputerPlayer player(board, out);
+    
+    player.move();
+
+    assertEquals(out.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(expected));
+    assertTrue(board.get_checker(expected).is_king());
+    assertFalse(board.has_checker(start));
+    assertFalse(board.has_checker(enemy_first));
+    assertFalse(board.has_checker(enemy_second));
+}
+
+void ComputerPlayerMove_SimpleEat_ResetCounter() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("C3");
+    Position enemy = Position::from_string("D4");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy, Checker('B'));
+    ComputerPlayer player(board, out);
+    board.increment_stagnation_counter();
+    
+    player.move();
+
+    assertEquals(board.get_stagnation_counter(), 0);
+}
+
+void ComputerPlayerMove_HightEat_ResetCounter() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("B6");
+    Position enemy = Position::from_string("C7");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy, Checker('B'));
+    ComputerPlayer player(board, out);
+    board.increment_stagnation_counter();
+    
+    player.move();
+
+    assertEquals(board.get_stagnation_counter(), 0);
+}
+
+void ComputerPlayerMove_SimpleEat_ResetHumanHasKing() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("C3");
+    Position enemy = Position::from_string("D4");
+    Checker computer('W');
+    computer.set_king();
+    Checker human('B');
+    human.set_king();
+    board.add_checker(start, computer);
+    board.add_checker(enemy, human);
+    ComputerPlayer player(board, out);
+    board.set_has_human_king(true);
+    
+    player.move();
+
+    assertFalse(board.has_human_king());
+}
+
+void ComputerPlayerMove_HightEat_SetComputerHasKing() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("B6");
+    Position enemy = Position::from_string("C7");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy, Checker('B'));
+    ComputerPlayer player(board, out);
+    
+    player.move();
+
+    assertTrue(board.has_computer_king());
+}
+
+void ComputerPlayerMove_UselessMove_IncrementCounter() {
+    Board board;
+    board.set_orientation('B');
+    std::stringstream out;
+    Position start = Position::from_string("A1");
+    Position enemy = Position::from_string("A7");
+    Checker computer('W');
+    computer.set_king();
+    Checker human('B');
+    human.set_king();
+    board.add_checker(start, computer);
+    board.add_checker(enemy, human);
+    ComputerPlayer player(board, out);
+    board.set_has_human_king(true);
+    
+    player.move();
+
+    assertEquals(board.get_stagnation_counter(), 1);
 }
