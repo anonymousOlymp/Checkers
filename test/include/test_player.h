@@ -13,6 +13,8 @@ void HumanPlayerMove_DoubleMove_MoveConditions();
 
 void HumanPlayerMove_MoveGhost_MoveConditions();
 
+void HumanPlayerMove_SimpleEat_MoveConditions();
+
 void HumanPlayerMove_SimpleMove_MoveConditions();
 
 void HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();

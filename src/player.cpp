@@ -112,7 +112,7 @@ bool HumanPlayer::is_move_correct(const Move &move,
 
 bool HumanPlayer::try_move(Position position, Position goal,
                            Direction direction, bool need_eat, bool &is_king,
-                           Positions eaten) const {
+                           Positions &eaten) const {
     if (!exists(position, direction)) {
         return false;
     }
@@ -132,6 +132,13 @@ bool HumanPlayer::try_move(Position position, Position goal,
                 } else {
                     eaten_moves = board_.get_eat_moves(real, true);
                 }
+                Moves tmp_eaten_moves;
+                for (Move eaten_move : eaten_moves) {
+                    if (!eaten.contains(eaten_move.second)) {
+                        tmp_eaten_moves.push_back(eaten_move);
+                    }
+                }
+                tmp_eaten_moves.swap(eaten_moves);
                 for (Move eaten_move : eaten_moves) {
                     bool deep_is_king = real_is_king;
                     if (try_move(eaten_move.second, goal, eaten_move, true, deep_is_king, eaten)) {

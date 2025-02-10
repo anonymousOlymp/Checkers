@@ -236,5 +236,6 @@ int main(int argc, const char** argv) {
     HumanPlayerMove_MoveGhost_MoveConditions();
     HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();
     HumanPlayerMove_DoubleMove_MoveConditions();
+    HumanPlayerMove_SimpleEat_MoveConditions();
     return 0;
 }

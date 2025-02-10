@@ -230,3 +230,36 @@ void HumanPlayerMove_MoveGhost_MoveConditions() {
     assertTrue(board.has_checker(Position::from_string("B2")));
     assertFalse(board.has_checker(start));
 }
+
+void HumanPlayerMove_SimpleEat_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("C3");
+    Position enemy = Position::from_string("B2");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy, Checker('B'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|........\n"
+        "6|........\n"
+        "5|........\n"
+        "4|........\n"
+        "3|..W.....\n"
+        "2|.B......\n"
+        "1|........\n"
+        "Your move: ";
+    in << "C3 A1\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(Position::from_string("A1")));
+    assertFalse(board.has_checker(start));
+    assertFalse(board.has_checker(enemy));
+}

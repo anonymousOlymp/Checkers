@@ -43,8 +43,9 @@ private:
     bool is_move_correct(const Move &move, const Positions &necessary_to_move,
                          const Positions &able_to_move,
                          bool &was_king_produced);
-    bool try_move(Position position, Position goal, Direction direction,
-                  bool need_eat, bool &is_king, Positions eaten) const;
+    bool try_move(Position position, Position goal,
+                  Direction direction, bool need_eat, bool &is_king,
+                  Positions &eaten) const;
 };
 
 class ComputerPlayer : public Player {
