@@ -553,3 +553,13 @@ void BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone() {
     
     assertTrue(result.empty());
 }
+
+void BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(std::string position, char orientation, bool is_human, bool expected) {
+    Position p = Position::from_string(position);
+    Board board;
+    board.set_orientation(orientation);
+
+    bool result = board.is_changed_to_king(p, is_human);
+
+    assertEquals(result, expected);
+}

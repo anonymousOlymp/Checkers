@@ -79,4 +79,6 @@ void BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone();
 
 void BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone();
 
+void BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(std::string position, char orientation, bool is_human, bool expected);
+
 #endif // TEST_BOARD_H

@@ -211,8 +211,8 @@ void Board::increment_stagnation_counter() { ++stagnation_counter_; }
 void Board::reset_stagnation_counter() { stagnation_counter_ = 0; }
 
 bool Board::is_changed_to_king(Position position, bool is_human) const {
-    if (position.row == 'A' && (is_human ^ (side_ == 'W')) ||
-        position.row == 'H' && (is_human ^ (side_ == 'B'))) {
+    if (position.row == '1' && (is_human ^ (side_ == 'W')) ||
+        position.row == '8' && (is_human ^ (side_ == 'B'))) {
         return true;
     }
     return false;
