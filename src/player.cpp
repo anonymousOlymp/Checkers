@@ -55,21 +55,116 @@ void HumanPlayer::move() {
         Position next = Position::from_string(next_position);
         bool was_king_produced = false;
         if (!current || !next ||
-            !is_move_correct(Move(current, next), checkers_necessary_to_move,
-                             checkers_able_to_move, was_king_produced)) {
+            !try_do_move(Move(current, next), checkers_necessary_to_move,
+                             checkers_able_to_move)) {
             err_ << "Error. Wrong move: " << current_position << " "
                       << next_position << " Try again!" << std::endl;
         } else {
             move_is_correct = true;
-            if (board_.has_human_king() && board_.has_computer_king()) {
-                board_.increment_stagnation_counter();
-            }
-            if (was_king_produced) {
-                board_.set_has_human_king(true);
-                board_.reset_stagnation_counter();
-            }
         }
     }
+}
+
+bool HumanPlayer::try_do_move(const Move &move, const Positions &necessary_to_move,
+                                  const Positions &able_to_move) {
+    if (!necessary_to_move.empty() && !necessary_to_move.contains(move.first)) {
+        return false;
+    }
+    if (necessary_to_move.empty() && !able_to_move.contains(move.first)) {
+        return false;
+    }
+    Checker moved = board_.get_checker(move.first);
+    board_.remove_checker(move.first);
+    bool is_king = moved.is_king();
+    if (!necessary_to_move.empty()) {
+        Moves appropriate_to_eat;
+        if (is_king) {
+            appropriate_to_eat = board_.get_king_eat_moves(move.first, true);
+        } else {
+            appropriate_to_eat = board_.get_eat_moves(move.first, true);
+        }
+        std::unordered_set<Position> eaten_checkers;
+        for (Move eaten : appropriate_to_eat) {
+            auto result = try_eat(eaten, move.second, is_king, eaten_checkers);
+            if (result == MoveResult::SUCCESS_KING) {
+                moved.set_king();
+                board_.set_has_human_king(true);
+            }
+            if (result != MoveResult::FAIL) {
+                board_.reset_stagnation_counter();
+                board_.set_has_computer_king(false);
+                for (Position position : eaten_checkers) {
+                    board_.remove_checker(position);
+                }
+                board_.add_checker(move.second, moved);
+                return true;
+            }
+        }
+        board_.add_checker(move.first, moved);
+        return false;
+    }
+    Moves appropriate_to_go;
+    if (is_king) {
+        appropriate_to_go = board_.get_king_free_moves(move.first);
+    } else {
+        appropriate_to_go = board_.get_free_moves(move.first, true);
+    }
+    for (Move simple_move : appropriate_to_go) {
+        if (simple_move.second == move.second) {
+            bool became_king = !is_king && board_.is_changed_to_king(move.second, true);
+            if (became_king) {
+                moved.set_king();
+                board_.set_has_human_king(true);
+                board_.reset_stagnation_counter();
+            } else if (board_.has_human_king() && board_.has_computer_king()) {
+                board_.increment_stagnation_counter();
+            }
+            board_.add_checker(move.second, moved);
+            return true;
+        }
+    }
+    board_.add_checker(move.first, moved);
+    return false;
+}
+
+HumanPlayer::MoveResult HumanPlayer::try_eat(Move move, Position goal, bool is_king, Positions &eaten) {
+    Direction direction = move;
+    Position current = move.second;
+    eaten.insert(current);
+    while (exists(current, direction)) {
+        Position next = current + direction;
+        is_king = board_.is_changed_to_king(next, true);
+        Moves appropriate_to_eat;
+        if (is_king) {
+            appropriate_to_eat = board_.get_king_eat_moves(next, true);
+        } else {
+            appropriate_to_eat = board_.get_eat_moves(next, true);
+        }
+        bool can_eat = false;
+        for (Move eat_goal : appropriate_to_eat) {
+            if (!eaten.contains(eat_goal.second)) {
+                can_eat = true;
+                MoveResult result = try_eat(eat_goal, goal, is_king, eaten);
+                if (result != MoveResult::FAIL) {
+                    return result;
+                }
+            }
+        }
+        if (!can_eat) {
+            if (goal == move.second) {
+                if (is_king) {
+                    return MoveResult::SUCCESS_KING;
+                }
+                return MoveResult::SUCCESS_SIMPLE;
+            }
+        }
+        if (!is_king) {
+            break;
+        }
+        current = next;
+    }
+    eaten.insert(move.second);
+    return MoveResult::FAIL;
 }
 
 bool HumanPlayer::is_move_correct(const Move &move,

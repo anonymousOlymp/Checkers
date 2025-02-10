@@ -36,6 +36,8 @@ public:
     void move() override;
 
 private:
+    enum class MoveResult { SUCCESS_SIMPLE, SUCCESS_KING, FAIL };
+
     std::ostream &out_;
     std::ostream &err_;
     std::istream &in_;
@@ -46,6 +48,10 @@ private:
     bool try_move(Position position, Position goal,
                   Direction direction, bool need_eat, bool &is_king,
                   Positions &eaten) const;
+    bool try_do_move(const Move &move, const Positions &necessary_to_move,
+                         const Positions &able_to_move);
+
+    HumanPlayer::MoveResult try_eat(Move move, Position goal, bool is_king, Positions &eaten);
 };
 
 class ComputerPlayer : public Player {
