@@ -189,5 +189,17 @@ int main(int argc, const char** argv) {
     BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone();
     BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone();
     BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone();
+
+    BoardGetKingEatMoves_CenterFree_ReturnsNone();
+    BoardGetKingEatMoves_CenterWithSameChecker_ReturnsNone();
+    BoardGetKingEatMoves_CenterWithOppositeChecker_ReturnsOne();
+    BoardGetKingEatMoves_CenterWithTwoOppositeChecker_ReturnsNone();
+    BoardGetKingEatMoves_CenterWithTwoChecker_ReturnsNone();
+    BoardGetKingEatMoves_CornerWithOppositeChecker_ReturnsNone();
+    BoardGetKingEatMoves_CenterWithSameCheckerFarAway_ReturnsNone();
+    BoardGetKingEatMoves_CenterWithOppositeCheckerFarAway_ReturnsOne();
+    BoardGetKingEatMoves_CenterWithTwoOppositeCheckerFarAway_ReturnsNone();
+    BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone();
+    BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone();
     return 0;
 }

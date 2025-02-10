@@ -167,6 +167,29 @@ Moves Board::get_king_eat_moves(Position position) const {
     return buffer;
 }
 
+Moves Board::get_king_eat_moves(Position position, bool is_human) const {
+    std::vector<Move> result;
+    char current_side = (is_human) ? side_ : ('W' + 'H' - side_);
+    for (auto direction : get_all_direction_values()) {
+        Position current = position;
+        while (exists(current, direction)) {
+            Position next = current + direction;
+            if (has_checker(next)) {
+                if (get_checker(next).get_side() != current_side &&
+                    exists(next, direction)) {
+                    Position continuation = next + direction;
+                    if (!has_checker(continuation)) {
+                        result.push_back(Move(position, next));
+                    }
+                }
+                break;
+            }
+            current = next;
+        }
+    }
+    return result;
+}
+
 char Board::get_side() const { return side_; }
 
 bool Board::has_human_king() const { return has_human_king_; }

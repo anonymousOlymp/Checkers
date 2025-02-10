@@ -57,4 +57,26 @@ void BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone();
 
 void BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone();
 
+void BoardGetKingEatMoves_CenterFree_ReturnsNone();
+
+void BoardGetKingEatMoves_CenterWithSameChecker_ReturnsNone();
+
+void BoardGetKingEatMoves_CenterWithOppositeChecker_ReturnsOne();
+
+void BoardGetKingEatMoves_CenterWithTwoOppositeChecker_ReturnsNone();
+
+void BoardGetKingEatMoves_CenterWithTwoChecker_ReturnsNone();
+
+void BoardGetKingEatMoves_CornerWithOppositeChecker_ReturnsNone();
+
+void BoardGetKingEatMoves_CenterWithSameCheckerFarAway_ReturnsNone();
+
+void BoardGetKingEatMoves_CenterWithOppositeCheckerFarAway_ReturnsOne();
+
+void BoardGetKingEatMoves_CenterWithTwoOppositeCheckerFarAway_ReturnsNone();
+
+void BoardGetKingEatMoves_CenterWithTwoCheckerFarAway_ReturnsNone();
+
+void BoardGetKingEatMoves_CornerWithOppositeCheckerFarAway_ReturnsNone();
+
 #endif // TEST_BOARD_H

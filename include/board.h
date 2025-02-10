@@ -40,7 +40,8 @@ public:
     Moves get_free_moves(Position position) const; // TODO divide to king and others
     Moves get_eat_moves(Position position, char current_side = '\0') const; // TODO remove
     Moves get_eat_moves(Position position, bool is_human) const;
-    Moves get_king_eat_moves(Position position) const;
+    Moves get_king_eat_moves(Position position) const; // TODO remove
+    Moves get_king_eat_moves(Position position, bool is_human) const;
     char get_side() const;
     bool has_human_king() const;
     void set_has_human_king(bool has_human_king);
