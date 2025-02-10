@@ -23,6 +23,12 @@ void HumanPlayerMove_MultipleEatAndReturns_MoveConditions();
 
 void HumanPlayerMove_MoveThrough_MoveConditions();
 
+void HumanPlayerMove_BackMove_MoveConditions();
+
+void HumanPlayerMove_MoveBecameKing_MoveConditions();
+
+void HumanPlayerMove_EatBecameKingSimple_MoveConditions();
+
 void HumanPlayerMove_SimpleMove_MoveConditions();
 
 void HumanPlayerMove_SimpleMoveAnotherFormat_MoveConditions();

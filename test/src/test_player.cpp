@@ -412,3 +412,134 @@ void HumanPlayerMove_MoveThrough_MoveConditions() {
     assertTrue(board.has_checker(fixed));
 }
 
+void HumanPlayerMove_BackMove_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("B2");
+    board.add_checker(start, Checker('W'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|........\n"
+        "6|........\n"
+        "5|........\n"
+        "4|........\n"
+        "3|........\n"
+        "2|.W......\n"
+        "1|........\n"
+        "Your move: "
+        "Your move: ";
+    in << "B2 A1\nB2 C3\n";
+    std::string expected_err = "Error. Wrong move: B2 A1 Try again!\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), expected_err);
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(Position::from_string("C3")));
+    assertFalse(board.has_checker(start));
+}
+
+void HumanPlayerMove_Stop_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("B2");
+    board.add_checker(start, Checker('W'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|........\n"
+        "6|........\n"
+        "5|........\n"
+        "4|........\n"
+        "3|........\n"
+        "2|.W......\n"
+        "1|........\n"
+        "Your move: "
+        "Your move: ";
+    in << "B2 B2\nB2 C3\n";
+    std::string expected_err = "Error. Wrong move: B2 B2 Try again!\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), expected_err);
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(Position::from_string("C3")));
+    assertFalse(board.has_checker(start));
+}
+
+void HumanPlayerMove_MoveBecameKing_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("A7");
+    Position finish = Position::from_string("B8");
+    board.add_checker(start, Checker('W'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|W.......\n"
+        "6|........\n"
+        "5|........\n"
+        "4|........\n"
+        "3|........\n"
+        "2|........\n"
+        "1|........\n"
+        "Your move: ";
+    in << "A7 B8\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(finish));
+    assertTrue(board.get_checker(finish).is_king());
+    assertFalse(board.has_checker(start));
+}
+
+void HumanPlayerMove_EatBecameKingSimple_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("B6");
+    Position finish = Position::from_string("D8");
+    Position enemy = Position::from_string("C7");
+    board.add_checker(start, Checker('W'));
+    board.add_checker(enemy, Checker('B'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|..B.....\n"
+        "6|.W......\n"
+        "5|........\n"
+        "4|........\n"
+        "3|........\n"
+        "2|........\n"
+        "1|........\n"
+        "Your move: ";
+    in << "B6 D8\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(finish));
+    assertTrue(board.get_checker(finish).is_king());
+    assertFalse(board.has_checker(start));
+    assertFalse(board.has_checker(enemy));
+}
+

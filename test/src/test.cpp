@@ -253,5 +253,8 @@ int main(int argc, const char** argv) {
     HumanPlayerMove_MultipleEat_MoveConditions();
     HumanPlayerMove_MultipleEatAndReturns_MoveConditions();
     HumanPlayerMove_MoveThrough_MoveConditions();
+    HumanPlayerMove_BackMove_MoveConditions();
+    HumanPlayerMove_MoveBecameKing_MoveConditions();
+    HumanPlayerMove_EatBecameKingSimple_MoveConditions();
     return 0;
 }
