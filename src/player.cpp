@@ -90,7 +90,7 @@ bool HumanPlayer::is_move_correct(const Move &move,
     for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,
                            Direction::UP_LEFT, Direction::UP_RIGHT}) {
         if (try_move(move.first, move.second, direction,
-                     necessary_to_move.empty(), is_king, eaten_checkers)) {
+                     !necessary_to_move.empty(), is_king, eaten_checkers)) {
             if (!eaten_checkers.empty()) {
                 board_.reset_stagnation_counter();
                 board_.set_has_computer_king(false);
@@ -157,6 +157,9 @@ bool HumanPlayer::try_move(Position position, Position goal,
             }
         }
         eaten.erase(next);
+        return false;
+    }
+    if (need_eat) {
         return false;
     }
     while (!board_.has_checker(next)) {
