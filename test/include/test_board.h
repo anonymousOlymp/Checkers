@@ -45,4 +45,16 @@ void BoardGetFreeMoves_CornerFree_ReturnsOne();
 
 void BoardGetFreeMoves_NotFree_ReturnsThree(char side);
 
+void BoardGetEatMoves_CenterFree_ReturnsNone();
+
+void BoardGetEatMoves_CenterWithSameChecker_ReturnsNone();
+
+void BoardGetEatMoves_CenterWithOppositeChecker_ReturnsOne();
+
+void BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone();
+
+void BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone();
+
+void BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone();
+
 #endif // TEST_BOARD_H

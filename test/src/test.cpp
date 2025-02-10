@@ -182,5 +182,12 @@ int main(int argc, const char** argv) {
     BoardGetFreeMoves_CornerFree_ReturnsOne();
     BoardGetFreeMoves_NotFree_ReturnsThree('W');
     BoardGetFreeMoves_NotFree_ReturnsThree('B');
+
+    BoardGetEatMoves_CenterFree_ReturnsNone();
+    BoardGetEatMoves_CenterWithSameChecker_ReturnsNone();
+    BoardGetEatMoves_CenterWithOppositeChecker_ReturnsOne();
+    BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone();
+    BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone();
+    BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone();
     return 0;
 }

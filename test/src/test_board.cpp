@@ -308,3 +308,88 @@ void BoardGetFreeMoves_NotFree_ReturnsThree(char side) {
     
     assertEquals(result.size(), 3);
 }
+
+void BoardGetEatMoves_CenterFree_ReturnsNone() {
+    Board board = Board();
+    board.set_orientation('W');
+    Position position = Position::from_string("C5");
+
+    Moves result = board.get_eat_moves(position, 'W');
+    
+    assertTrue(result.empty());
+}
+
+void BoardGetEatMoves_CenterWithSameChecker_ReturnsNone() {
+    Board board = Board();
+    char current_side = 'W';
+    board.set_orientation(current_side);
+    Position position = Position::from_string("C5");
+    Checker checker(current_side);
+    board.add_checker(position + Direction::DOWN_LEFT, checker);
+
+    Moves result = board.get_eat_moves(position, true);
+    
+    assertTrue(result.empty());
+}
+
+void BoardGetEatMoves_CenterWithOppositeChecker_ReturnsOne() {
+    Board board = Board();
+    char current_side = 'W';
+    board.set_orientation(current_side);
+    Position position = Position::from_string("C5");
+    Checker checker('H' + 'W' - current_side);
+    Direction direction = Direction::UP_LEFT;
+    board.add_checker(position + direction, checker);
+
+    Moves result = board.get_eat_moves(position, true);
+    
+    assertEquals(result.size(), 1);
+    assertEquals(static_cast<int>(static_cast<Direction>(result[0])), static_cast<int>(direction));
+}
+
+void BoardGetEatMoves_CenterWithTwoOppositeChecker_ReturnsNone() {
+    Board board = Board();
+    char current_side = 'W';
+    board.set_orientation(current_side);
+    Position position = Position::from_string("C5");
+    Checker checker('H' + 'W' - current_side);
+    Direction direction = Direction::UP_LEFT;
+    Position next = position + direction;
+    board.add_checker(next, checker);
+    board.add_checker(next + direction, checker);
+
+    Moves result = board.get_eat_moves(position, true);
+    
+    assertTrue(result.empty());
+}
+
+void BoardGetEatMoves_CenterWithTwoChecker_ReturnsNone() {
+    Board board = Board();
+    char current_side = 'W';
+    board.set_orientation(current_side);
+    Position position = Position::from_string("C5");
+    Checker checker('H' + 'W' - current_side);
+    Direction direction = Direction::UP_LEFT;
+    Position next = position + direction;
+    board.add_checker(next, checker);
+    board.add_checker(next + direction, Checker(current_side));
+
+    Moves result = board.get_eat_moves(position, true);
+    
+    assertTrue(result.empty());
+}
+
+void BoardGetEatMoves_CornerWithOppositeChecker_ReturnsNone() {
+    Board board = Board();
+    char current_side = 'W';
+    board.set_orientation(current_side);
+    Position position = Position::from_string("A1");
+    Checker checker('H' + 'W' - current_side);
+    Direction direction = Direction::UP_RIGHT;
+    Position next = position + direction;
+    board.add_checker(position, checker);
+
+    Moves result = board.get_eat_moves(next, true);
+    
+    assertTrue(result.empty());
+}

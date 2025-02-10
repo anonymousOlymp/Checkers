@@ -101,11 +101,9 @@ Moves Board::get_free_moves(Position position) const {
     return result;
 }
 
-Moves Board::get_eat_moves(Position position) const {
+Moves Board::get_eat_moves(Position position, char current_side) const {
     std::vector<Move> result;
-    char current_side = get_checker(position).get_side();
-    for (auto direction : {Direction::DOWN_LEFT, Direction::DOWN_RIGHT,
-                           Direction::UP_LEFT, Direction::UP_RIGHT}) {
+    for (auto direction : get_all_direction_values()) {
         apply_if_exists(
             position, direction,
             [&result, this, position, current_side, direction](Position next) {
@@ -121,6 +119,26 @@ Moves Board::get_eat_moves(Position position) const {
                         });
                 }
             });
+    }
+    return result;
+}
+
+Moves Board::get_eat_moves(Position position, bool is_human) const {
+    std::vector<Move> result;
+    char current_side = (is_human) ? side_ : ('W' + 'H' - side_);
+    for (auto direction : get_all_direction_values()) {
+        if (exists(position, direction)) {
+            Position next = position + direction;
+            if (has_checker(next) &&
+                get_checker(next).get_side() != current_side) {
+                if (exists(next, direction)) {
+                    Position continuation = next + direction;
+                    if (!has_checker(continuation)) {
+                        result.push_back(Move(position, next));
+                    }
+                }
+            }
+        }
     }
     return result;
 }
