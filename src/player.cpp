@@ -9,7 +9,6 @@
 #include "position.h"
 
 void HumanPlayer::move() {
-    out_ << static_cast<std::string>(board_) << std::endl;
     Positions checkers_necessary_to_move;
     Positions checkers_able_to_move;
     bool has_checkers = false;
@@ -21,8 +20,8 @@ void HumanPlayer::move() {
                 board_.set_has_human_king(true);
             }
             if (checker.is_king() &&
-                    !board_.get_king_eat_moves(position).empty() ||
-                !checker.is_king() && !board_.get_eat_moves(position).empty()) {
+                    !board_.get_king_eat_moves(position, true).empty() ||
+                !checker.is_king() && !board_.get_eat_moves(position, true).empty()) {
                 checkers_necessary_to_move.insert(position);
             }
             if (checkers_necessary_to_move.empty()) {
@@ -35,6 +34,7 @@ void HumanPlayer::move() {
         board_.set_state(Board::State::COMPUTER_WON);
         return;
     }
+    out_ << static_cast<std::string>(board_) << std::endl;
     if (board_.has_human_king() && board_.has_computer_king() &&
         board_.get_stagnation_counter() == 15) {
         board_.set_state(Board::State::DRAW);
@@ -128,9 +128,9 @@ bool HumanPlayer::try_move(Position position, Position goal,
                 bool real_is_king = board_.is_changed_to_king(next, true);
                 Moves eaten_moves;
                 if (real_is_king) {
-                    eaten_moves = board_.get_king_eat_moves(real);
+                    eaten_moves = board_.get_king_eat_moves(real, true);
                 } else {
-                    eaten_moves = board_.get_eat_moves(real);
+                    eaten_moves = board_.get_eat_moves(real, true);
                 }
                 for (Move eaten_move : eaten_moves) {
                     bool deep_is_king = real_is_king;
@@ -177,9 +177,9 @@ void ComputerPlayer::move() {
         Moves neighbors_can_eat;
         if (checker.is_king()) {
             board_.set_has_computer_king(true);
-            neighbors_can_eat = board_.get_king_eat_moves(position);
+            neighbors_can_eat = board_.get_king_eat_moves(position, true);
         } else {
-            neighbors_can_eat = board_.get_eat_moves(position);
+            neighbors_can_eat = board_.get_eat_moves(position, true);
         }
         necessary_to_move.insert(necessary_to_move.end(),
                                  neighbors_can_eat.begin(),
@@ -242,9 +242,9 @@ void ComputerPlayer::eat_all(Move &chosen, Direction &direction,
         is_king = board_.is_changed_to_king(next, false);
         Moves eat_positions;
         if (is_king) {
-            eat_positions = board_.get_king_eat_moves(next);
+            eat_positions = board_.get_king_eat_moves(next, true);
         } else {
-            eat_positions = board_.get_eat_moves(next);
+            eat_positions = board_.get_eat_moves(next, true);
         }
         for (Move eat_move : eat_positions) {
             if (!eaten.contains(eat_move.second)) {

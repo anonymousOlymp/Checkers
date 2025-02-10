@@ -226,5 +226,8 @@ int main(int argc, const char** argv) {
         "E1", 'W', false, true);
     BoardIsChangedToKing_VariousPositionOrientationSide_ReturnsExpected(
         "E1", 'B', false, false);
+    
+    // player
+    HumanPlayerMove_EmptyBoard_ComputerWinConditions();
     return 0;
 }
