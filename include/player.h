@@ -51,7 +51,7 @@ private:
     bool try_do_move(const Move &move, const Positions &necessary_to_move,
                          const Positions &able_to_move);
 
-    HumanPlayer::MoveResult try_eat(Move move, Position goal, bool is_king, Positions &eaten);
+    HumanPlayer::MoveResult try_eat(Move move, Position goal, bool is_king, Positions &eaten) const;
 };
 
 class ComputerPlayer : public Player {

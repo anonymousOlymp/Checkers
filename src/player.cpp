@@ -136,7 +136,7 @@ bool HumanPlayer::try_do_move(const Move &move, const Positions &necessary_to_mo
     return false;
 }
 
-HumanPlayer::MoveResult HumanPlayer::try_eat(Move move, Position goal, bool is_king, Positions &eaten) {
+HumanPlayer::MoveResult HumanPlayer::try_eat(Move move, Position goal, bool is_king, Positions &eaten) const {
     Direction direction = move;
     Position current = move.second;
     eaten.insert(current);
