@@ -16,12 +16,14 @@ public:
     enum class State { DRAW, PLAYING, HUMAN_WON, COMPUTER_WON };
     using Functor = std::function<void(Position, const Checker &)>;
 
-    Board();
+    Board() noexcept = default;
     Board(const Board &) = default;
     Board(Board &&) noexcept = default;
     Board &operator=(const Board &) = default;
     Board &operator=(Board &&) noexcept = default;
     ~Board() noexcept = default;
+
+    static Board create_begining_board();
 
     operator std::string() const;
     State get_state() const noexcept;

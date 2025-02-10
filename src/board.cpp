@@ -5,17 +5,19 @@
 #include "checker.h"
 #include "position.h"
 
-Board::Board() {
+Board Board::create_begining_board() {
+    Board board;
     for (char column = 'A'; column <= 'H'; column += 2) {
-        board_.emplace(Position(column, '1'), Checker('W'));
-        board_.emplace(Position(column, '3'), Checker('W'));
-        board_.emplace(Position(column, '7'), Checker('B'));
+        board.board_.emplace(Position(column, '1'), Checker('W'));
+        board.board_.emplace(Position(column, '3'), Checker('W'));
+        board.board_.emplace(Position(column, '7'), Checker('B'));
     }
     for (char column = 'B'; column <= 'H'; column += 2) {
-        board_.emplace(Position(column, '2'), Checker('W'));
-        board_.emplace(Position(column, '6'), Checker('B'));
-        board_.emplace(Position(column, '8'), Checker('B'));
+        board.board_.emplace(Position(column, '2'), Checker('W'));
+        board.board_.emplace(Position(column, '6'), Checker('B'));
+        board.board_.emplace(Position(column, '8'), Checker('B'));
     }
+    return board;
 }
 
 Board::operator std::string() const {
