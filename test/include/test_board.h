@@ -3,6 +3,14 @@
 
 #include  "board.h"
 
-void CreateBeginingBoard_VariousPosition_ReturnsIsThere(std::string position, bool expected, char type = '\0');
+void BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere(const std::string &position, bool expected, char type = '\0');
+
+void BoardToString_BeginingHumanWhite_ReturnsString();
+
+void BoardToString_BeginingHumanBlack_ReturnsString();
+
+void BoardToString_HumanBlackKingInPosition_ReturnsString();
+
+void BoardToString_HumanBlackWhiteKingInPosition_ReturnsString();
 
 #endif // TEST_BOARD_H

@@ -132,15 +132,20 @@ int main(int argc, const char** argv) {
     CheckerToChar_VariousChecker_ReturnsExpected('B', true, 'Y');
 
     // board
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("A1", true, 'W');
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("A3", true, 'W');
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("B2", true, 'W');
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("H8", true, 'B');
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("H6", true, 'B');
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("G7", true, 'B');
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("B1", false);
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("G8", false);
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("H1", false);
-    CreateBeginingBoard_VariousPosition_ReturnsIsThere("C5", false);
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("A1", true, 'W');
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("A3", true, 'W');
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("B2", true, 'W');
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("H8", true, 'B');
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("H6", true, 'B');
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("G7", true, 'B');
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("B1", false);
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("G8", false);
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("H1", false);
+    BoardCreateBeginingBoard_VariousPosition_ReturnsIsThere("C5", false);
+
+    BoardToString_BeginingHumanWhite_ReturnsString();
+    BoardToString_BeginingHumanBlack_ReturnsString();
+    BoardToString_HumanBlackKingInPosition_ReturnsString();
+    BoardToString_HumanBlackWhiteKingInPosition_ReturnsString();
     return 0;
 }

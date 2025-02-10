@@ -32,7 +32,7 @@ Board::operator std::string() const {
             result << std::endl;
         }
     } else {
-        result << " |HGFEDCBA\n" << std::endl;
+        result << " |HGFEDCBA" << std::endl;
         for (char row = '1'; row <= '8'; ++row) {
             result << row << '|';
             for (char column = 'H'; column >= 'A'; --column) {
