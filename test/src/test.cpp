@@ -163,5 +163,12 @@ int main(int argc, const char** argv) {
     BoardProcessComputerCheckers_OppositeValues_NoResult('B');
     BoardProcessComputerCheckers_TrueValues_ProcessResult('W');
     BoardProcessComputerCheckers_TrueValues_ProcessResult('B');
+
+    BoardHasHumanChecker_NoChecker_ReturnsFalse('W');
+    BoardHasHumanChecker_NoChecker_ReturnsFalse('B');
+    BoardHasHumanChecker_OppositeChecker_ReturnsFalse('W');
+    BoardHasHumanChecker_OppositeChecker_ReturnsFalse('B');
+    BoardHasHumanChecker_HumanChecker_ReturnsTrue('W');
+    BoardHasHumanChecker_HumanChecker_ReturnsTrue('B');
     return 0;
 }

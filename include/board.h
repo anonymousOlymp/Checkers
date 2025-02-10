@@ -31,7 +31,6 @@ public:
     void set_orientation(char orientation) noexcept;
     void process_human_checkers(const Functor &functor) const;
     void process_computer_checkers(const Functor &functor) const;
-    void process_checkers(const Functor &functor) const;
     bool has_computer_checker(Position position) const;
     bool has_human_checker(Position position) const;
     bool has_checker(Position position) const;

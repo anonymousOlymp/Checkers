@@ -68,12 +68,6 @@ void Board::process_computer_checkers(const Functor &functor) const {
     }
 }
 
-void Board::process_checkers(const Functor &functor) const {
-    for (const auto &position_to_checker : board_) {
-        functor(position_to_checker.first, position_to_checker.second);
-    }
-}
-
 bool Board::has_computer_checker(Position position) const {
     return has_checker(position) && get_checker(position).get_side() != side_;
 }

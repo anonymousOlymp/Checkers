@@ -4,6 +4,7 @@
 #include <unordered_set>
 
 #include "board.h"
+#include "checker.h"
 #include "position.h"
 #include "test.h"
 
@@ -206,5 +207,38 @@ void BoardProcessComputerCheckers_TrueValues_ProcessResult(char human_side) {
     board.process_computer_checkers(
         [&result, addable](Position p, const Checker &) { result = (p == addable); });
 
+    assertTrue(result);
+}
+
+void BoardHasHumanChecker_NoChecker_ReturnsFalse(char human_side) {
+    Board board = Board();
+    board.set_orientation(human_side);
+
+    bool result = board.has_human_checker(Position::from_string("A1"));
+
+    assertFalse(result);
+}
+
+void BoardHasHumanChecker_OppositeChecker_ReturnsFalse(char human_side) {
+    Board board = Board();
+    board.set_orientation(human_side);
+    Position position = Position::from_string("A1");
+    Checker checker('W' + 'B' - human_side);
+    board.add_checker(position, checker);
+
+    bool result = board.has_human_checker(position);
+    
+    assertFalse(result);
+}
+
+void BoardHasHumanChecker_HumanChecker_ReturnsTrue(char human_side) {
+    Board board = Board();
+    board.set_orientation(human_side);
+    Position position = Position::from_string("A1");
+    Checker checker(human_side);
+    board.add_checker(position, checker);
+
+    bool result = board.has_human_checker(position);
+    
     assertTrue(result);
 }

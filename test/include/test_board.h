@@ -27,4 +27,10 @@ void BoardProcessComputerCheckers_OppositeValues_NoResult(char human_side);
 
 void BoardProcessComputerCheckers_TrueValues_ProcessResult(char human_side);
 
+void BoardHasHumanChecker_NoChecker_ReturnsFalse(char human_side);
+
+void BoardHasHumanChecker_OppositeChecker_ReturnsFalse(char human_side);
+
+void BoardHasHumanChecker_HumanChecker_ReturnsTrue(char human_side);
+
 #endif // TEST_BOARD_H
