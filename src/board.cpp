@@ -25,6 +25,7 @@ Board::operator std::string() const {
     std::stringstream result;
     if (side_ == 'W') {
         result << " |ABCDEFGH" << std::endl;
+        result << "_________" << std::endl;
         for (char row = '8'; row >= '1'; --row) {
             result << row << '|';
             for (char column = 'A'; column <= 'H'; ++column) {
@@ -34,6 +35,7 @@ Board::operator std::string() const {
         }
     } else {
         result << " |HGFEDCBA" << std::endl;
+        result << "_________" << std::endl;
         for (char row = '1'; row <= '8'; ++row) {
             result << row << '|';
             for (char column = 'H'; column >= 'A'; --column) {
