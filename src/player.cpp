@@ -1,5 +1,6 @@
 #include "player.h"
 
+#include <atomic>
 #include <iostream>
 #include <random>
 #include <unordered_set>
@@ -94,17 +95,9 @@ bool HumanPlayer::try_do_move(const Move &move, const Positions &necessary_to_mo
             if (result != MoveResult::FAIL) {
                 board_.reset_stagnation_counter();
                 board_.set_has_computer_king(false);
-                // for (Position position : eaten_checkers) {
-                //     board_.remove_checker(position);
-                // }
-                std::for_each(
-                    std::execution::par,
-                    eaten_checkers.cbegin(),
-                    eaten_checkers.cend(),
-                    [this](Position position) {
-                        board_.remove_checker(position);
-                    }
-                );
+                for (Position position : eaten_checkers) {
+                    board_.remove_checker(position);
+                }
                 board_.add_checker(move.second, moved);
                 return true;
             }
@@ -228,17 +221,9 @@ void ComputerPlayer::move() {
         board_.reset_stagnation_counter();
         board_.set_has_human_king(false);
     }
-    // for (Position position : eaten) {
-    //     board_.remove_checker(position);
-    // }
-    std::for_each(
-                    std::execution::par,
-                    eaten.cbegin(),
-                    eaten.cend(),
-                    [this](Position position) {
-                        board_.remove_checker(position);
-                    }
-                );
+    for (Position position : eaten) {
+        board_.remove_checker(position);
+    }
     Position next = chosen_move.second;
     if (board_.has_computer_king() && board_.has_human_king()) {
         board_.increment_stagnation_counter();
@@ -264,12 +249,14 @@ void ComputerPlayer::eat_all(Move &chosen, Direction &direction,
         } else {
             eat_positions = board_.get_eat_moves(next, false);
         }
-        for (Move eat_move : eat_positions) {
-            if (!eaten.contains(eat_move.second)) {
+        std::atomic_bool reached(false);
+        std::for_each(std::execution::par, eat_positions.cbegin(), eat_positions.cend(),
+        [this, &reached, &eaten, &chosen, &direction](Move eat_move) {
+            bool expected_to_execute = false;
+            if (!eaten.contains(eat_move.second) && reached.compare_exchange_strong(expected_to_execute, true)) {
                 chosen = Move(chosen.first, eat_move.second);
                 direction = eat_move;
-                break;
             }
-        }
+        });
     }
 }
