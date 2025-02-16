@@ -142,7 +142,7 @@ HumanPlayer::MoveResult HumanPlayer::try_eat(Move move, Position goal, bool is_k
     eaten.insert(current);
     while (exists(current, direction)) {
         Position next = current + direction;
-        is_king = board_.is_changed_to_king(next, true);
+        is_king = is_king || board_.is_changed_to_king(next, true);
         Moves appropriate_to_eat;
         if (is_king) {
             appropriate_to_eat = board_.get_king_eat_moves(next, true);

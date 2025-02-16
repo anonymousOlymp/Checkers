@@ -31,6 +31,8 @@ void HumanPlayerMove_EatBecameKingSimple_MoveConditions();
 
 void HumanPlayerMove_DoubleMoveKing_MoveConditions();
 
+void HumanPlayerMove_LongMoveEatKing_MoveConditions();
+
 void HumanPlayerMove_MoveBecameKing_ResetCounter();
 
 void HumanPlayerMove_MoveBecameKing_SetHumanHasKing();

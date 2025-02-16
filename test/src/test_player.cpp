@@ -575,6 +575,41 @@ void HumanPlayerMove_DoubleMoveKing_MoveConditions() {
     assertFalse(board.has_checker(start));
 }
 
+void HumanPlayerMove_LongMoveEatKing_MoveConditions() {
+    Board board;
+    board.set_orientation('W');
+    std::stringstream in;
+    std::stringstream out;
+    std::stringstream err;
+    Position start = Position::from_string("A1");
+    Position enemy = Position::from_string("C3");
+    Checker checker('W');
+    checker.set_king();
+    board.add_checker(start, checker);
+    board.add_checker(enemy, Checker('B'));
+    HumanPlayer player(board, out, err, in);
+    std::string expected_out = " |ABCDEFGH\n"
+        "8|........\n"
+        "7|........\n"
+        "6|........\n"
+        "5|........\n"
+        "4|........\n"
+        "3|..B.....\n"
+        "2|........\n"
+        "1|X.......\n"
+        "Your move: ";
+    in << "A1 E5\n";
+    
+    player.move();
+
+    assertEquals(out.str(), expected_out);
+    assertEquals(err.str(), "");
+    assertEquals(static_cast<int>(board.get_state()), static_cast<int>(Board::State::PLAYING));
+    assertTrue(board.has_checker(Position::from_string("E5")));
+    assertFalse(board.has_checker(start));
+    assertFalse(board.has_checker(enemy));
+}
+
 void HumanPlayerMove_MoveBecameKing_ResetCounter() {
     Board board;
     board.set_orientation('W');

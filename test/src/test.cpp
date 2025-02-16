@@ -259,6 +259,7 @@ int main(int argc, const char** argv) {
     HumanPlayerMove_MoveBecameKing_MoveConditions();
     HumanPlayerMove_EatBecameKingSimple_MoveConditions();
     HumanPlayerMove_DoubleMoveKing_MoveConditions();
+    HumanPlayerMove_LongMoveEatKing_MoveConditions();
     HumanPlayerMove_MoveBecameKing_ResetCounter();
     HumanPlayerMove_MoveBecameKing_SetHumanHasKing();
     HumanPlayerMove_SimpleEat_ResetCounter();
